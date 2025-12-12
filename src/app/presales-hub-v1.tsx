@@ -103,6 +103,8 @@ const PresalesHub = () => {
                     : 'text-gray-400 cursor-not-allowed opacity-60'
                   }`}
                 disabled={!item.active}
+                title={isSidebarCollapsed ? item.name : undefined}
+                aria-label={isSidebarCollapsed ? item.name : undefined}
               >
                 <Icon className={`w-5 h-5 ${!isSidebarCollapsed ? 'mr-3' : ''} transition-colors ${activeSection === item.id ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'
                   }`} />
