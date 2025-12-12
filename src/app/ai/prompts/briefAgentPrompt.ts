@@ -23,7 +23,7 @@ Discovery Questions
 1. Provide up to 5-10 role-specific discovery questions that align to the meeting type and industry.
 
 Industry Insights
-- 3 concise bullets with industry-relevant insights; include stats or directional data when possible.
+- 3-5 concise bullets with industry-relevant insights; include stats or directional data when possible.
 
 Competitive Positioning
 - 3-5 bullets on how our offering stands out (integration with common stacks, speed to value, ROI window, security/compliance, adaptability to changing conditions).
