@@ -17,7 +17,7 @@ const PresalesHub = () => {
     context: ''
   });
   const [generatedBrief, setGeneratedBrief] = useState<GeneratedBrief | null>(null);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   const navigation = [
     { id: 'dashboard', name: 'Dashboard', icon: Home, active: true },
