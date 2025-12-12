@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "start": "serve dist --single --listen $PORT",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -27,6 +28,7 @@
     "autoprefixer": "^10.4.18",
     "jsdom": "^27.3.0",
     "postcss": "^8.4.35",
+    "serve": "^14.2.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
