@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { industries, meetingTypes, clientRoles, BriefData, GeneratedBrief } from '../constants';
-import { generateBriefData } from '../utils';
+import { generateExecutiveBrief } from '../../../ai/briefAgent';
 
 interface BriefGeneratorProps {
     briefData: BriefData;
@@ -16,9 +16,22 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
     setGeneratedBrief
 }) => {
 
-    const handleGenerateBrief = () => {
-        const brief = generateBriefData(briefData);
-        setGeneratedBrief(brief);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const handleGenerateBrief = async () => {
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const brief = await generateExecutiveBrief(briefData);
+            setGeneratedBrief(brief);
+        } catch (err) {
+            console.error('Brief generation failed', err);
+            setError('We could not reach the AI agent. Using fallback content.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -27,6 +40,11 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">Executive Brief Generator</h1>
                 <p className="text-gray-600">Create personalized prep materials for your next meeting</p>
             </div>
+            {error && (
+                <div className="bg-amber-50 border border-amber-200 text-amber-900 px-4 py-3 rounded-lg">
+                    {error}
+                </div>
+            )}
             {!generatedBrief ? (
                 <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
                     <div className="space-y-6">
@@ -55,8 +73,12 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Additional Context (Optional)</label>
                             <textarea className="w-full border border-gray-300 rounded-lg px-4 py-3" rows={4} placeholder="Any specific topics, challenges, or goals..." value={briefData.context} onChange={(e) => setBriefData({ ...briefData, context: e.target.value })} />
                         </div>
-                        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:bg-gray-400" onClick={handleGenerateBrief} disabled={!briefData.industry || !briefData.meetingType || !briefData.clientRole}>
-                            Generate Executive Brief
+                        <button
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:bg-gray-400"
+                            onClick={handleGenerateBrief}
+                            disabled={isLoading || !briefData.industry || !briefData.meetingType || !briefData.clientRole}
+                        >
+                            {isLoading ? 'Generating...' : 'Generate Executive Brief'}
                         </button>
                     </div>
                 </div>
@@ -65,9 +87,9 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex justify-between items-center">
                         <div>
                             <p className="text-sm font-semibold text-blue-900">Brief Generated for:</p>
-                            <p className="text-blue-800">{generatedBrief.industry} • {generatedBrief.meetingType} • {generatedBrief.clientRole}</p>
+                            <p className="text-blue-800">{generatedBrief.industry} | {generatedBrief.meetingType} | {generatedBrief.clientRole}</p>
                         </div>
-                        <button className="bg-white border border-blue-300 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-50 font-medium" onClick={() => setGeneratedBrief(null)}>New Brief</button>
+                        <button className="bg-white border border-blue-300 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-50 font-medium" onClick={() => { setGeneratedBrief(null); setError(null); }}>New Brief</button>
                     </div>
                     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                         <h2 className="text-xl font-bold text-gray-900 mb-4">Your Elevator Pitch</h2>
@@ -89,7 +111,7 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
                         <ul className="space-y-2">
                             {generatedBrief.industryInsights.map((ins, i) => (
                                 <li key={i} className="flex items-start">
-                                    <span className="text-green-600 mr-3">•</span>
+                                    <span className="text-green-600 mr-3">&#183;</span>
                                     <span className="text-gray-700">{ins}</span>
                                 </li>
                             ))}
@@ -100,7 +122,7 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
                         <ul className="space-y-2">
                             {generatedBrief.positioning.map((p, i) => (
                                 <li key={i} className="flex items-start">
-                                    <span className="text-purple-600 mr-3">✓</span>
+                                    <span className="text-purple-600 mr-3">-</span>
                                     <span className="text-gray-700">{p}</span>
                                 </li>
                             ))}
@@ -113,7 +135,7 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
                         <div className="bg-gray-50 rounded-lg p-4">
                             <p className="text-sm font-semibold text-gray-700 mb-2">Key Metrics:</p>
                             <ul className="space-y-1">
-                                {generatedBrief.caseStudy.metrics.map((m, i) => <li key={i} className="text-sm text-gray-600">• {m}</li>)}
+                                {generatedBrief.caseStudy.metrics.map((m, i) => <li key={i} className="text-sm text-gray-600">- {m}</li>)}
                             </ul>
                         </div>
                     </div>
