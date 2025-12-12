@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { industries, meetingTypes, clientRoles, BriefData, GeneratedBrief } from '../constants';
+import { persistBriefResult } from '../api';
 import { generateExecutiveBrief } from '../../../ai/briefAgent';
 
 interface BriefGeneratorProps {
@@ -26,6 +27,12 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
         try {
             const brief = await generateExecutiveBrief(briefData);
             setGeneratedBrief(brief);
+            try {
+                await persistBriefResult(briefData, brief);
+            } catch (persistError) {
+                console.error('Brief persistence failed', persistError);
+                setError('Brief generated but could not be saved to the database.');
+            }
         } catch (err) {
             console.error('Brief generation failed', err);
             setError('We could not reach the AI agent. Using fallback content.');
