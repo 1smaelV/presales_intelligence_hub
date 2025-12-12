@@ -20,7 +20,7 @@ Your Elevator Pitch
 - If context is provided, weave it in. Default solution is an agentic AI platform that automates complex workflows and scales efficiently.
 
 Discovery Questions
-1. Provide up to 5 role-specific discovery questions that align to the meeting type and industry.
+1. Provide up to 5-10 role-specific discovery questions that align to the meeting type and industry.
 
 Industry Insights
 - 3 concise bullets with industry-relevant insights; include stats or directional data when possible.
