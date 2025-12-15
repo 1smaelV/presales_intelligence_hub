@@ -5,6 +5,8 @@ export interface AIMessage {
   content: string;
 }
 
+export type AIProvider = 'openai' | 'gemini';
+
 export interface ChatCompletionChoice {
   message: {
     role: string;

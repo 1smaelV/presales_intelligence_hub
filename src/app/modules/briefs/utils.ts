@@ -1,5 +1,11 @@
 import { BriefData, GeneratedBrief } from './constants';
 
+/**
+ * Retrieves a tailored elevator pitch based on the client's industry.
+ * 
+ * @param {string} industry - The target industry.
+ * @returns {string} The industry-specific or default elevator pitch.
+ */
 export const getElevatorPitch = (industry: string) => {
     const pitches: Record<string, string> = {
         'Healthcare': 'We help healthcare organizations transform patient care and operational efficiency through intelligent agentic automation that adapts to complex clinical workflows, ensuring compliance while reducing administrative burden by up to 60%.',
@@ -12,6 +18,13 @@ export const getElevatorPitch = (industry: string) => {
     return pitches[industry] || pitches['default'];
 };
 
+/**
+ * Generates a list of discovery questions tailored to the industry.
+ * Combines a base set of questions with industry-specific additions.
+ * 
+ * @param {string} industry - The target industry.
+ * @returns {string[]} An array of discovery questions.
+ */
 export const getDiscoveryQuestions = (industry: string) => {
     const base = [
         'What business processes currently require the most manual intervention or slow your teams down?',
@@ -29,12 +42,25 @@ export const getDiscoveryQuestions = (industry: string) => {
     return [...base, ...(specific[industry] || [])];
 };
 
+/**
+ * Retrieves a placeholder case study object for the given industry.
+ * Note: This currently returns generic placeholders to be filled with real data.
+ * 
+ * @param {string} industry - The target industry.
+ * @returns {object} An object containing the title, summary, and placeholder metrics.
+ */
 export const getCaseStudy = (industry: string) => ({
     title: `${industry} Transformation Example`,
     summary: 'Detailed case study content will be populated here based on your materials.',
     metrics: ['Placeholder for key metrics', 'ROI and timeline data', 'Business impact summary']
 });
 
+/**
+ * Provides key industry insights and statistical data points.
+ * 
+ * @param {string} industry - The target industry.
+ * @returns {string[]} A list of insights relevant to the industry.
+ */
 export const getIndustryInsights = (industry: string) => {
     const insights: Record<string, string[]> = {
         'Healthcare': ['Administrative costs account for 25-30% of total healthcare spending', 'Provider burnout driven by documentation burden is at all-time high', 'Interoperability challenges create $30B+ in annual waste'],
@@ -45,6 +71,12 @@ export const getIndustryInsights = (industry: string) => {
     return insights[industry] || insights['default'];
 };
 
+/**
+ * Returns standard competitive positioning statements.
+ * These highlight the unique value proposition of the agentic AI solution.
+ * 
+ * @returns {string[]} A list of positioning statements.
+ */
 export const getPositioning = () => [
     'Unlike RPA or basic automation, agentic systems reason through complex scenarios and adapt to changing conditions',
     'Our platform integrates with your existing tech stack (Azure, AWS, ServiceNow, Salesforce)',
@@ -52,6 +84,13 @@ export const getPositioning = () => [
     'Enterprise-grade security, governance, and compliance built-in from day one'
 ];
 
+/**
+ * Generates a complete executive brief object based on user input.
+ * Aggregates data from the various helper functions (pitch, questions, etc.).
+ * 
+ * @param {BriefData} briefData - The user input data.
+ * @returns {GeneratedBrief} The complete, structured brief.
+ */
 export const generateBriefData = (briefData: BriefData): GeneratedBrief => {
     return {
         industry: briefData.industry,

@@ -1,3 +1,7 @@
+/**
+ * Component for displaying key talking points and value propositions.
+ * Currently serves as a placeholder template for content structure.
+ */
 const TalkingPoints = () => {
     return (
         <div className="space-y-6">

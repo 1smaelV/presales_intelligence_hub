@@ -1,3 +1,7 @@
+/**
+ * Component for displaying industry-specific case studies.
+ * Currently serves as a placeholder template where real success stories and metrics can be populated.
+ */
 const CaseStudies = () => {
     return (
         <div className="space-y-6">

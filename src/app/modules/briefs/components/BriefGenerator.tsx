@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { industries, meetingTypes, clientRoles, BriefData, GeneratedBrief } from '../constants';
 import { persistBriefResult } from '../api';
 import { generateExecutiveBrief } from '../../../ai/briefAgent';
+import { GEMINI_DEFAULT_MODEL } from '../../../ai/providers/geminiProvider';
+import { OPENAI_DEFAULT_MODEL } from '../../../ai/providers/openaiProvider';
+import { AIProvider } from '../../../ai/types';
 
+/**
+ * Props for the BriefGenerator component.
+ * Manages the state of the brief form data and the generated result.
+ */
 interface BriefGeneratorProps {
     briefData: BriefData;
     setBriefData: (data: BriefData) => void;
@@ -10,6 +17,62 @@ interface BriefGeneratorProps {
     setGeneratedBrief: (brief: GeneratedBrief | null) => void;
 }
 
+/**
+ * A visual loading component displayed while the AI is generating the brief.
+ * Features a cycling text animation and a pulsing visual to engage the user.
+ */
+const BriefLoadingState = () => {
+    // Steps to display to the user while waiting, simulating the AI's thought process
+    const loadingSteps = [
+        "Analyzing Industry Trends...",
+        "Scanning Competitive Landscape...",
+        "Identifying Key Opportunities...",
+        "Drafting Executive Summary..."
+    ];
+    const [stepIndex, setStepIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setStepIndex((prev) => (prev + 1) % loadingSteps.length);
+        }, 2500);
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div className="bg-white border border-gray-200 rounded-lg p-12 shadow-sm flex flex-col items-center justify-center min-h-[400px]">
+            <div className="relative w-24 h-24 mb-8">
+                {/* Outer pulsing ring */}
+                <div className="absolute inset-0 bg-blue-500 rounded-full opacity-20 animate-ping"></div>
+
+                {/* Rotating border */}
+                <div className="absolute inset-0 border-4 border-blue-100 rounded-full"></div>
+                <div className="absolute inset-0 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
+
+                {/* Center Icon */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <svg className="w-10 h-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+            </div>
+
+            <h3 className="text-xl font-bold text-gray-900 mb-2 animate-pulse text-center">
+                {loadingSteps[stepIndex]}
+            </h3>
+            <p className="text-gray-500 text-center max-w-sm">
+                Our AI agents are gathering insights to prepare your meeting brief.
+            </p>
+        </div>
+    );
+};
+
+/**
+ * BriefGenerator Component
+ * 
+ * The main component for the "Generate" tab.
+ * It displays a form to collect meeting details, handles the API call to the AI provider,
+ * shows a loading state during generation, and displays the final structured brief.
+ */
 const BriefGenerator: React.FC<BriefGeneratorProps> = ({
     briefData,
     setBriefData,
@@ -19,13 +82,41 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    // Track provider/model choice so we can route the request to the right client.
+    const [modelSelection, setModelSelection] = useState<{ provider: AIProvider; model: string }>(() => ({
+        provider: 'openai',
+        model: OPENAI_DEFAULT_MODEL
+    }));
 
+    // Keep explicit options so Gemini wiring matches the notebook-tested endpoint.
+    const modelOptions: { label: string; value: string; provider: AIProvider }[] = [
+        {
+            label: `OpenAI - ${OPENAI_DEFAULT_MODEL}`,
+            value: OPENAI_DEFAULT_MODEL,
+            provider: 'openai'
+        },
+        {
+            label: `Google - ${GEMINI_DEFAULT_MODEL}`,
+            value: GEMINI_DEFAULT_MODEL,
+            provider: 'gemini'
+        }
+    ];
+
+    /**
+     * Triggers the AI generation process.
+     * Validates inputs (implicit via UI disabled state), calls the selected AI provider,
+     * and handles success/error states including persistence.
+     */
     const handleGenerateBrief = async () => {
         setIsLoading(true);
         setError(null);
 
         try {
-            const brief = await generateExecutiveBrief(briefData);
+            // Call the AI agent with the selected provider (OpenAI or Gemini)
+            const brief = await generateExecutiveBrief(briefData, {
+                provider: modelSelection.provider,
+                model: modelSelection.model
+            });
             setGeneratedBrief(brief);
             try {
                 await persistBriefResult(briefData, brief);
@@ -43,16 +134,43 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
 
     return (
         <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Executive Brief Generator</h1>
-                <p className="text-gray-600">Create personalized prep materials for your next meeting</p>
+            <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Executive Brief Generator</h1>
+                    <p className="text-gray-600">Create personalized prep materials for your next meeting</p>
+                </div>
+                <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-full px-3 py-2 shadow-sm">
+                    <span className="text-xs font-semibold text-gray-600">Model</span>
+                    <select
+                        className="text-sm text-gray-800 bg-transparent focus:outline-none"
+                        value={`${modelSelection.provider}:${modelSelection.model}`}
+                        onChange={(e) => {
+                            const [provider, model] = e.target.value.split(':');
+                            setModelSelection({ provider: provider as AIProvider, model });
+                        }}
+                    >
+                        {modelOptions.map(option => (
+                            <option key={`${option.provider}:${option.value}`} value={`${option.provider}:${option.value}`}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
             {error && (
                 <div className="bg-amber-50 border border-amber-200 text-amber-900 px-4 py-3 rounded-lg">
                     {error}
                 </div>
             )}
-            {!generatedBrief ? (
+            {/* Conditional Rendering Logic:
+                1. If loading, show the animation.
+                2. If no brief exists yet, show the input form.
+                3. If a brief exists, show the results view.
+            */}
+            {isLoading ? (
+                <BriefLoadingState />
+            ) : !generatedBrief ? (
+                /* --- Input Form Section --- */
                 <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
                     <div className="space-y-6">
                         <div>
@@ -90,6 +208,7 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
                     </div>
                 </div>
             ) : (
+                /* --- Generated Results Section --- */
                 <div className="space-y-6">
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex justify-between items-center">
                         <div>

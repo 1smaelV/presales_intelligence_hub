@@ -8,6 +8,12 @@ import KeyQuestions from './modules/knowledge-base/KeyQuestions';
 import TalkingPoints from './modules/knowledge-base/TalkingPoints';
 import ComingSoon from './modules/placeholders/ComingSoon';
 
+/**
+ * PresalesHub - Main Application Component
+ * 
+ * Serves as the root layout and navigation manager for the Presales Intelligence Hub.
+ * Manages the global state for the Brief Generator to persist data when switching views.
+ */
 const PresalesHub = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [briefData, setBriefData] = useState<BriefData>({
@@ -19,6 +25,7 @@ const PresalesHub = () => {
   const [generatedBrief, setGeneratedBrief] = useState<GeneratedBrief | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
+  // Navigation configuration defining sections, icons, and availability status
   const navigation = [
     { id: 'dashboard', name: 'Dashboard', icon: Home, active: true },
     { id: 'brief-generator', name: 'Brief Generator', icon: Sparkles, active: true },
@@ -31,6 +38,9 @@ const PresalesHub = () => {
     { id: 'training', name: 'Training Plans', icon: GraduationCap, active: false },
   ];
 
+  /**
+   * Renders the active component based on the current selection in the sidebar.
+   */
   const renderContent = () => {
     switch (activeSection) {
       case 'dashboard':

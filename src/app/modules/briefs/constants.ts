@@ -1,3 +1,6 @@
+/**
+ * List of supported industries for the briefing tool.
+ */
 export const industries = [
     'Healthcare',
     'Financial Services',
@@ -10,6 +13,9 @@ export const industries = [
     'Other'
 ];
 
+/**
+ * List of standard meeting types to tailor the brief context.
+ */
 export const meetingTypes = [
     'Intro Call',
     'Discovery Session',
@@ -19,6 +25,9 @@ export const meetingTypes = [
     'Follow-up Meeting'
 ];
 
+/**
+ * List of potential client roles to customize communication style and focus.
+ */
 export const clientRoles = [
     'C-Suite (CEO, CTO, CFO)',
     'VP Level',
@@ -28,13 +37,20 @@ export const clientRoles = [
     'Business Analyst'
 ];
 
+/**
+ * Structure of the user input data required to generate a brief.
+ */
 export interface BriefData {
     industry: string;
     meetingType: string;
     clientRole: string;
+    /** Additional context provided by the user (optional). */
     context: string;
 }
 
+/**
+ * Structure of the fully generated executive brief returned by the AI.
+ */
 export interface GeneratedBrief {
     industry: string;
     meetingType: string;

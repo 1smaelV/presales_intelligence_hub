@@ -1,17 +1,52 @@
 import { BriefData, GeneratedBrief } from './constants';
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+/**
+ * Resolves the base URL for the backend API.
+ * Uses the VITE_API_URL environment variable if set.
+ * Defaults to localhost:3001 if running on Vite's default dev port (5173).
+ * Otherwise falls back to the current window origin.
+ * 
+ * @returns {string} The resolved API base URL without strict trailing slash.
+ */
+const resolveApiBaseUrl = () => {
+  const envBase = import.meta.env.VITE_API_URL;
+  if (envBase) return envBase.replace(/\/$/, '');
 
+  if (typeof window === 'undefined') return '';
+
+  const origin = window.location.origin.replace(/\/$/, '');
+
+  // Helpful dev fallback: if running Vite on 5173, assume API on 3001.
+  if (origin.includes('localhost:5173')) return 'http://localhost:3001';
+
+  return origin;
+};
+
+const API_BASE_URL = resolveApiBaseUrl();
+
+/**
+ * Represents a category of questions with a specific name.
+ */
 export interface CategorizedQuestions {
   name: string;
   questions: string[];
 }
 
+/**
+ * Represents questions categorized by client role.
+ */
 export interface RoleCategories {
   role: string;
   categories: CategorizedQuestions[];
 }
 
+/**
+ * Persists the generated brief to the backend.
+ * 
+ * @param {BriefData} briefData - The input data used to generate the brief.
+ * @param {GeneratedBrief} generatedBrief - The structured brief output from the AI.
+ * @throws {Error} If the API request fails.
+ */
 export const persistBriefResult = async (
   briefData: BriefData,
   generatedBrief: GeneratedBrief
@@ -33,6 +68,14 @@ export const persistBriefResult = async (
   }
 };
 
+/**
+ * Fetches industry-specific questions from the backend API.
+ * 
+ * @param {string} industry - The target industry to fetch questions for.
+ * @param {string} [clientRole] - (Optional) The specific client role to filter by.
+ * @returns {Promise<RoleCategories[]>} A list of question categories grouped by role.
+ * @throws {Error} If the API request fails.
+ */
 export const fetchIndustryQuestions = async (
   industry: string,
   clientRole?: string

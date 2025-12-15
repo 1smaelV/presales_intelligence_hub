@@ -5,7 +5,8 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react()],
-    envPrefix: ['VITE_', 'OPENAI_', 'AI_', 'BRIEF_'],
+    // Allow Gemini env vars through Vite so Gemini provider gets model/key from .env.
+    envPrefix: ['VITE_', 'OPENAI_', 'AI_', 'BRIEF_', 'GEMINI_'],
     test: {
         globals: true,
         environment: 'jsdom',

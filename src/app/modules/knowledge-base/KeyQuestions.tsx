@@ -3,21 +3,34 @@ import { industries, clientRoles } from '../briefs/constants';
 import { fetchIndustryQuestions, RoleCategories } from '../briefs/api';
 import { getDiscoveryQuestions } from '../briefs/utils';
 
+/**
+ * Component for exploring discovery questions.
+ * Allows filtering questions by industry and client role.
+ * Fetches questions from an API, with a fallback to local utilities.
+ */
 const KeyQuestions = () => {
+    // State for filter selection
     const [selectedIndustry, setSelectedIndustry] = useState(industries[0]);
+    const [selectedRole, setSelectedRole] = useState<string>('');
+
+    // State for question data and loading status
     const [roleCategories, setRoleCategories] = useState<RoleCategories[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [selectedRole, setSelectedRole] = useState<string>('');
+
+    // State for the "Read more" modal
     const [modalOpen, setModalOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState('');
     const [modalQuestions, setModalQuestions] = useState<string[]>([]);
 
+    // Memoize fallback categories to avoid unnecessary re-calculations
+    // This provides a default view if the API call fails or returns empty fields
     const fallbackCategory = useMemo(() => {
         const local = getDiscoveryQuestions(selectedIndustry || '').slice(0, 6);
         return [{ role: selectedRole || 'All Roles', categories: [{ name: 'General', questions: local }] }];
     }, [selectedIndustry, selectedRole]);
 
+    // Fetch questions whenever industry or role selection changes
     useEffect(() => {
         let isMounted = true;
         const load = async () => {
@@ -106,6 +119,7 @@ const KeyQuestions = () => {
                     </div>
                 </div>
 
+                {/* Dynamic Question Display Section */}
                 <div className="bg-blue-950/60 border border-white/10 rounded-xl p-4">
                     {loading ? (
                         <div className="flex items-center gap-3 text-blue-100">

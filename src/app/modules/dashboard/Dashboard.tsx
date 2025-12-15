@@ -1,10 +1,18 @@
 import React from 'react';
 import { FileText, MessageSquare, BookOpen, Wrench, Layers, Sparkles } from 'lucide-react';
 
+/**
+ * Props for the Dashboard component.
+ */
 interface DashboardProps {
+    /** Callback to handle navigation changes within the app */
     onNavigate: (sectionId: string) => void;
 }
 
+/**
+ * Main dashboard component acting as the landing page and navigation hub.
+ * Displays summary cards for different features and a quick-start guide.
+ */
 const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
     return (
         <div className="space-y-6">
