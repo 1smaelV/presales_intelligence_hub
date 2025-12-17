@@ -21,7 +21,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 <p className="text-lg text-gray-600">Your command center for confident, strategic Agentic AI conversations</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-10">
-                {/* Executive Brief Generator */}
+                {/* General Meeting Prep */}
                 <div
                     className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl border border-gray-100 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer relative overflow-hidden"
                     onClick={() => onNavigate('brief-generator')}
@@ -32,8 +32,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                         <div className="bg-primary-50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary-600 transition-colors duration-300">
                             <Sparkles className="w-8 h-8 text-primary-600 group-hover:text-white transition-colors duration-300" />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">Brief Generator</h3>
-                        <p className="text-gray-500 mb-6 leading-relaxed">Generate personalized AI-powered prep briefs for any meeting in seconds.</p>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3">General Meeting Prep</h3>
+                        <p className="text-gray-500 mb-6 leading-relaxed">Generate personalized AI-powered prep for any meeting in seconds.</p>
                         <span className="flex items-center text-primary-600 font-semibold group-hover:translate-x-2 transition-transform duration-200">
                             Get Started <span className="ml-2">→</span>
                         </span>
@@ -102,7 +102,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 <h3 className="text-2xl font-bold mb-4 relative z-10">🚀 Ready to start?</h3>
                 <div className="grid md:grid-cols-2 gap-8 relative z-10">
                     <ol className="list-decimal list-inside space-y-3 text-primary-100">
-                        <li>Open the <strong>Brief Generator</strong></li>
+                        <li>Open the <strong>General Meeting Prep</strong></li>
                         <li>Enter your client's industry and context</li>
                         <li>Get instant talking points & strategy</li>
                     </ol>
@@ -111,7 +111,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                             onClick={() => onNavigate('brief-generator')}
                             className="bg-white text-primary-900 px-6 py-3 rounded-xl font-bold hover:bg-primary-50 transition-colors shadow-lg"
                         >
-                            Generate Brief Now
+                            Start Meeting Prep
                         </button>
                     </div>
                 </div>

@@ -13,7 +13,7 @@ import ComingSoon from './modules/placeholders/ComingSoon';
  * PresalesHub - Main Application Component
  * 
  * Serves as the root layout and navigation manager for the Presales Intelligence Hub.
- * Manages the global state for the Brief Generator to persist data when switching views.
+ * Manages the global state for the General Meeting Prep to persist data when switching views.
  */
 const PresalesHub = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -30,7 +30,7 @@ const PresalesHub = () => {
   // Navigation configuration defining sections, icons, and availability status
   const navigation = [
     { id: 'dashboard', name: 'Dashboard', icon: Home, active: true },
-    { id: 'brief-generator', name: 'Brief Generator', icon: Sparkles, active: true },
+    { id: 'brief-generator', name: 'General Meeting Prep', icon: Sparkles, active: true },
     { id: 'brief-history', name: 'Brief History', icon: History, active: true },
     { id: 'case-studies', name: 'Case Studies', icon: FileText, active: true },
     { id: 'key-questions', name: 'Key Questions', icon: MessageSquare, active: true },
@@ -179,7 +179,7 @@ const PresalesHub = () => {
           {!isSidebarCollapsed && (
             <div className="bg-gradient-to-br from-primary-900 to-primary-800 rounded-xl p-4 text-white shadow-lg">
               <p className="text-sm font-medium opacity-90 mb-1">Pro Tip</p>
-              <p className="text-xs opacity-75">Use the Brief Generator before every client meeting.</p>
+              <p className="text-xs opacity-75">Use General Meeting Prep before every client meeting.</p>
             </div>
           )}
         </div>

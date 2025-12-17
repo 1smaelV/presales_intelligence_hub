@@ -4,7 +4,7 @@ AI-assisted workspace for presales teams to prepare executive briefs, curate dis
 
 ## Features
 
-- **Executive Brief Generator** – Collects meeting context and instantly produces elevator pitches, discovery questions, insights, and case study scaffolding.
+- **General Meeting Prep** – Collects meeting context and instantly produces elevator pitches, discovery questions, insights, and case study scaffolding.
 - **Dashboard Shortcuts** – Quick entry points into briefs, case studies, talking points, and upcoming modules.
 - **Knowledge Base Modules** – Structured placeholders for industry stories, talking points, and discovery prompts, ready for content expansion.
 - **Future-Ready Structure** – Codebase organized under `src/app` modules, leaving room for AI agents, RAG chatbot widgets, and shared packages described in `docs/PROJECT_STRUCTURE.md`.

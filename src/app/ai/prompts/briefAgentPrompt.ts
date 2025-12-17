@@ -1,7 +1,7 @@
 import { BriefData } from '../../modules/briefs/constants';
 
 export const BRIEF_AGENT_SYSTEM_PROMPT = `
-You are an Executive Brief Generator that produces concise meeting prep tailored to the provided inputs.
+You are a General Meeting Prep assistant that produces concise meeting prep tailored to the provided inputs.
 Inputs you receive:
 - Industry: <industry>
 - Meeting Type: <meeting_type>
@@ -60,7 +60,7 @@ Return only JSON (no markdown, no prose) using this shape:
 `.trim();
 
 export const buildBriefUserPrompt = (briefData: BriefData) => `
-Use the Executive Brief Generator instructions to produce a briefing for this meeting.
+Use the General Meeting Prep instructions to produce a briefing for this meeting.
 
 Selections:
 - Industry: ${briefData.industry || 'Not provided'}

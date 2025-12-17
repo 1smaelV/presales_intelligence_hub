@@ -136,7 +136,7 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
         <div className="space-y-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Executive Brief Generator</h1>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">General Meeting Prep</h1>
                     <p className="text-gray-600">Create personalized prep materials for your next meeting</p>
                 </div>
                 <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-full px-3 py-2 shadow-sm">
@@ -203,7 +203,7 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
                             onClick={handleGenerateBrief}
                             disabled={isLoading || !briefData.industry || !briefData.meetingType || !briefData.clientRole}
                         >
-                            {isLoading ? 'Generating...' : 'Generate Executive Brief'}
+                            {isLoading ? 'Generating...' : 'Generate Meeting Prep'}
                         </button>
                     </div>
                 </div>
