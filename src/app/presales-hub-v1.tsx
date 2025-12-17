@@ -105,7 +105,10 @@ const PresalesHub = () => {
             className="p-2 rounded-lg text-gray-500 hover:text-primary-700 hover:bg-gray-100 transition-colors"
             aria-label={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            {isSidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            {isSidebarCollapsed
+              ? (sidebarPosition === 'left' ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />)
+              : (sidebarPosition === 'left' ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />)
+            }
           </button>
         </div>
 
