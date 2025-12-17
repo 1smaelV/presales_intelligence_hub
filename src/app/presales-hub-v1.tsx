@@ -87,7 +87,7 @@ const PresalesHub = () => {
           <div
             className="flex items-center gap-3 cursor-pointer group"
             onClick={() => setActiveSection('dashboard')}
-            title="Go to Dashboard"
+            title="Presales Intelligence Hub"
           >
             <div className="bg-primary-600 p-2 rounded-lg group-hover:bg-primary-700 transition-colors">
               <Sparkles className="w-5 h-5 text-white" />
