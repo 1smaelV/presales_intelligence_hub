@@ -41,6 +41,27 @@ export interface RoleCategories {
 }
 
 /**
+ * Represents a saved brief entry returned from the backend.
+ */
+export interface BriefHistoryItem {
+  id: string;
+  industry: string;
+  meetingType: string;
+  clientRole: string;
+  createdAt: string | null;
+  elevatorPitch: string;
+  discoveryQuestions: string[];
+  industryInsights: string[];
+  positioning: string[];
+  caseStudy: {
+    title: string;
+    summary: string;
+    metrics: string[];
+  } | null;
+  context: string;
+}
+
+/**
  * Persists the generated brief to the backend.
  * 
  * @param {BriefData} briefData - The input data used to generate the brief.
@@ -93,4 +114,28 @@ export const fetchIndustryQuestions = async (
 
   const payload = await response.json();
   return Array.isArray(payload?.roleCategories) ? payload.roleCategories : [];
+};
+
+/**
+ * Fetches the list of recently generated briefs with optional filters.
+ * 
+ * @param {object} filters - Optional filters for industry and client role.
+ * @returns {Promise<BriefHistoryItem[]>} The list of briefs for display.
+ * @throws {Error} If the API request fails.
+ */
+export const fetchBriefHistory = async (filters?: { industry?: string; clientRole?: string }): Promise<BriefHistoryItem[]> => {
+  const params = new URLSearchParams();
+  if (filters?.industry) params.set('industry', filters.industry);
+  if (filters?.clientRole) params.set('clientRole', filters.clientRole);
+
+  const query = params.toString();
+  const response = await fetch(`${API_BASE_URL}/api/briefs${query ? `?${query}` : ''}`);
+
+  if (!response.ok) {
+    const message = await response.text().catch(() => response.statusText);
+    throw new Error(`Failed to load briefs (${response.status}): ${message}`);
+  }
+
+  const payload = await response.json();
+  return Array.isArray(payload?.briefs) ? payload.briefs : [];
 };

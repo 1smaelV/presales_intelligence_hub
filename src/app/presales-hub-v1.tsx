@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Home, FileText, Users, MessageSquare, BookOpen, Wrench, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Home, FileText, Users, MessageSquare, BookOpen, Wrench, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History } from 'lucide-react';
 import { BriefData, GeneratedBrief } from './modules/briefs/constants';
 import Dashboard from './modules/dashboard/Dashboard';
 import BriefGenerator from './modules/briefs/components/BriefGenerator';
+import BriefHistory from './modules/briefs/components/BriefHistory';
 import CaseStudies from './modules/knowledge-base/CaseStudies';
 import KeyQuestions from './modules/knowledge-base/KeyQuestions';
 import TalkingPoints from './modules/knowledge-base/TalkingPoints';
@@ -29,6 +30,7 @@ const PresalesHub = () => {
   const navigation = [
     { id: 'dashboard', name: 'Dashboard', icon: Home, active: true },
     { id: 'brief-generator', name: 'Brief Generator', icon: Sparkles, active: true },
+    { id: 'brief-history', name: 'Brief History', icon: History, active: true },
     { id: 'case-studies', name: 'Case Studies', icon: FileText, active: true },
     { id: 'key-questions', name: 'Key Questions', icon: MessageSquare, active: true },
     { id: 'talking-points', name: 'Talking Points', icon: BookOpen, active: true },
@@ -54,6 +56,8 @@ const PresalesHub = () => {
             setGeneratedBrief={setGeneratedBrief}
           />
         );
+      case 'brief-history':
+        return <BriefHistory />;
       case 'case-studies':
         return <CaseStudies />;
       case 'key-questions':

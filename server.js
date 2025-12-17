@@ -128,6 +128,45 @@ async function getRecentBriefQuestions(db, industry, clientRole) {
   }));
 }
 
+/**
+ * Shapes a brief document into a UI-friendly payload.
+ * Guards against missing fields and limits the returned content.
+ */
+const mapBriefListItem = doc => {
+  const brief = doc?.brief || {};
+  const id =
+    doc?._id && typeof doc._id === 'object' && typeof doc._id.toString === 'function'
+      ? doc._id.toString()
+      : doc?._id || '';
+  return {
+    id,
+    industry: brief.industry || 'Unknown',
+    meetingType: brief.meetingType || 'General Meeting',
+    clientRole: brief.clientRole || 'All Roles',
+    createdAt: doc?.createdAt || null,
+    elevatorPitch: typeof brief.elevatorPitch === 'string' ? brief.elevatorPitch : '',
+    discoveryQuestions: Array.isArray(brief.discoveryQuestions)
+      ? brief.discoveryQuestions.filter(Boolean).slice(0, 20)
+      : [],
+    industryInsights: Array.isArray(brief.industryInsights)
+      ? brief.industryInsights.filter(Boolean).slice(0, 10)
+      : [],
+    positioning: Array.isArray(brief.positioning)
+      ? brief.positioning.filter(Boolean).slice(0, 10)
+      : [],
+    caseStudy: typeof brief.caseStudy === 'object' && brief.caseStudy !== null
+      ? {
+          title: brief.caseStudy.title || 'Case study',
+          summary: brief.caseStudy.summary || '',
+          metrics: Array.isArray(brief.caseStudy.metrics)
+            ? brief.caseStudy.metrics.filter(Boolean).slice(0, 10)
+            : [],
+        }
+      : null,
+    context: typeof brief.context === 'string' ? brief.context : '',
+  };
+};
+
 app.get('/api/questions', async (req, res) => {
   const industry = req.query?.industry;
   const clientRole = req.query?.clientRole;
@@ -168,6 +207,28 @@ app.get('/api/questions', async (req, res) => {
   } catch (error) {
     console.error('Failed to load discovery questions', error);
     res.status(500).json({ error: 'Failed to load discovery questions' });
+  }
+});
+
+app.get('/api/briefs', async (req, res) => {
+  try {
+    const db = await getDb();
+    const collection = db.collection(briefCollectionName);
+
+    const match = {};
+    if (req.query?.industry) match['brief.industry'] = req.query.industry;
+    if (req.query?.clientRole) match['brief.clientRole'] = req.query.clientRole;
+
+    const docs = await collection
+      .find(match)
+      .sort({ createdAt: -1 })
+      .limit(25)
+      .toArray();
+
+    res.json({ briefs: docs.map(mapBriefListItem) });
+  } catch (error) {
+    console.error('Failed to load briefs', error);
+    res.status(500).json({ error: 'Failed to load briefs' });
   }
 });
 
