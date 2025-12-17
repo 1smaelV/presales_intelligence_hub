@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Home, FileText, Users, MessageSquare, BookOpen, Wrench, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History } from 'lucide-react';
+import { Home, FileText, Users, MessageSquare, BookOpen, Wrench, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart } from 'lucide-react';
 import { BriefData, GeneratedBrief } from './modules/briefs/constants';
 import Dashboard from './modules/dashboard/Dashboard';
 import BriefGenerator from './modules/briefs/components/BriefGenerator';
@@ -33,6 +33,7 @@ const PresalesHub = () => {
     { id: 'brief-history', name: 'Brief History', icon: History, active: true },
     { id: 'case-studies', name: 'Case Studies', icon: FileText, active: true },
     { id: 'key-questions', name: 'Key Questions', icon: MessageSquare, active: true },
+    { id: 'prospect-analyzer', name: 'Prospect Analyzer', icon: LineChart, active: true, external: true, href: 'https://prospect-analyzer.onrender.com/dashboard' },
     { id: 'talking-points', name: 'Talking Points', icon: BookOpen, active: true },
     { id: 'concepts', name: 'Concept Library', icon: Layers, active: false },
     { id: 'platforms', name: 'Platforms & Tools', icon: Wrench, active: false },
@@ -106,6 +107,30 @@ const PresalesHub = () => {
         <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
           {navigation.map(item => {
             const Icon = item.icon;
+
+            // Handle external links differently
+            if ((item as any).external) {
+              return (
+                <a
+                  key={item.id}
+                  href={(item as any).href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center' : ''} px-3 py-3 text-sm font-medium rounded-xl transition-all duration-200 group text-gray-600 hover:bg-gray-50 hover:text-gray-900`}
+                  title={isSidebarCollapsed ? item.name : undefined}
+                  aria-label={isSidebarCollapsed ? item.name : undefined}
+                >
+                  <Icon className={`w-5 h-5 ${!isSidebarCollapsed ? 'mr-3' : ''} transition-colors text-gray-400 group-hover:text-gray-600`} />
+                  {!isSidebarCollapsed && (
+                    <div className="flex items-center justify-between w-full">
+                      <span>{item.name}</span>
+                      <span className="ml-2 text-xs text-gray-400">↗</span>
+                    </div>
+                  )}
+                </a>
+              );
+            }
+
             return (
               <button
                 key={item.id}

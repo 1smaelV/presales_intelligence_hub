@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, MessageSquare, Layers, Sparkles } from 'lucide-react';
+import { FileText, MessageSquare, LineChart, Sparkles } from 'lucide-react';
 
 /**
  * Props for the Dashboard component.
@@ -86,7 +86,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-full translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-500 opacity-50" />
                     <div className="relative z-10">
                         <div className="bg-purple-50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors duration-300">
-                            <Layers className="w-8 h-8 text-purple-600 group-hover:text-white transition-colors duration-300" />
+                            <LineChart className="w-8 h-8 text-purple-600 group-hover:text-white transition-colors duration-300" />
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 mb-3">Prospect Analyzer</h3>
                         <p className="text-gray-500 mb-6 leading-relaxed">External tool for deep dive analysis into prospect data.</p>
