@@ -83,13 +83,17 @@ const PresalesHub = () => {
       {/* Sidebar */}
       <div className={`${isSidebarCollapsed ? 'w-20' : 'w-72'} bg-white border-r border-gray-200 flex flex-col shadow-sm transition-all duration-200`}>
         <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary-600 p-2 rounded-lg">
+          <div
+            className="flex items-center gap-3 cursor-pointer group"
+            onClick={() => setActiveSection('dashboard')}
+            title="Go to Dashboard"
+          >
+            <div className="bg-primary-600 p-2 rounded-lg group-hover:bg-primary-700 transition-colors">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             {!isSidebarCollapsed && (
               <div>
-                <h2 className="text-xl font-bold text-gray-900 tracking-tight">Presales Hub</h2>
+                <h2 className="text-xl font-bold text-gray-900 tracking-tight group-hover:text-primary-700 transition-colors">Presales Hub</h2>
                 <p className="text-xs text-gray-500 font-medium">Intelligence Center</p>
               </div>
             )}
