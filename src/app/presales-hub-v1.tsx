@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Home, FileText, Users, MessageSquare, BookOpen, Wrench, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart } from 'lucide-react';
+import { Home, FileText, Users, MessageSquare, BookOpen, Wrench, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart, PanelLeft, PanelRight } from 'lucide-react';
 import { BriefData, GeneratedBrief } from './modules/briefs/constants';
 import Dashboard from './modules/dashboard/Dashboard';
 import BriefGenerator from './modules/briefs/components/BriefGenerator';
@@ -25,6 +25,7 @@ const PresalesHub = () => {
   });
   const [generatedBrief, setGeneratedBrief] = useState<GeneratedBrief | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const [sidebarPosition, setSidebarPosition] = useState<'left' | 'right'>('left');
 
   // Navigation configuration defining sections, icons, and availability status
   const navigation = [
@@ -79,9 +80,9 @@ const PresalesHub = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 font-sans">
+    <div className={`flex h-screen bg-gray-50 font-sans ${sidebarPosition === 'right' ? 'flex-row-reverse' : ''}`}>
       {/* Sidebar */}
-      <div className={`${isSidebarCollapsed ? 'w-20' : 'w-72'} bg-white border-r border-gray-200 flex flex-col shadow-sm transition-all duration-200`}>
+      <div className={`${isSidebarCollapsed ? 'w-20' : 'w-72'} bg-white ${sidebarPosition === 'left' ? 'border-r' : 'border-l'} border-gray-200 flex flex-col shadow-sm transition-all duration-200`}>
         <div className="p-4 border-b border-gray-100 flex items-center justify-between">
           <div
             className="flex items-center gap-3 cursor-pointer group"
@@ -162,14 +163,23 @@ const PresalesHub = () => {
           })}
         </nav>
 
-        {!isSidebarCollapsed && (
-          <div className="p-4 border-t border-gray-100">
+        <div className="p-4 border-t border-gray-100 flex flex-col gap-4">
+          <button
+            onClick={() => setSidebarPosition(prev => prev === 'left' ? 'right' : 'left')}
+            className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'justify-start'} w-full p-2 text-gray-500 hover:text-primary-600 hover:bg-gray-50 rounded-lg transition-colors`}
+            title={sidebarPosition === 'left' ? "Move sidebar to right" : "Move sidebar to left"}
+          >
+            {sidebarPosition === 'left' ? <PanelRight className="w-5 h-5" /> : <PanelLeft className="w-5 h-5" />}
+            {!isSidebarCollapsed && <span className="ml-3 text-sm font-medium">Move to {sidebarPosition === 'left' ? 'Right' : 'Left'}</span>}
+          </button>
+
+          {!isSidebarCollapsed && (
             <div className="bg-gradient-to-br from-primary-900 to-primary-800 rounded-xl p-4 text-white shadow-lg">
               <p className="text-sm font-medium opacity-90 mb-1">Pro Tip</p>
               <p className="text-xs opacity-75">Use the Brief Generator before every client meeting.</p>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Main Content */}
