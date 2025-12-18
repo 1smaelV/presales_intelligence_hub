@@ -9,10 +9,14 @@ const formatDate = (value: string | null) => {
     return isNaN(date.getTime()) ? 'Date not available' : date.toLocaleString();
 };
 
-const BriefHistory = () => {
+interface BriefHistoryProps {
+    defaultIndustry?: string;
+}
+
+const BriefHistory: React.FC<BriefHistoryProps> = ({ defaultIndustry }) => {
     const [briefs, setBriefs] = useState<BriefHistoryItem[]>([]);
     const [selectedId, setSelectedId] = useState<string | null>(null);
-    const [filters, setFilters] = useState<{ industry?: string; clientRole?: string }>({});
+    const [filters, setFilters] = useState<{ industry?: string; clientRole?: string }>(() => (defaultIndustry ? { industry: defaultIndustry } : {}));
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -47,6 +51,12 @@ const BriefHistory = () => {
         loadBriefs();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filters.industry, filters.clientRole]);
+
+    useEffect(() => {
+        if (defaultIndustry) {
+            setFilters(prev => ({ ...prev, industry: defaultIndustry }));
+        }
+    }, [defaultIndustry]);
 
     return (
         <div className="space-y-6">

@@ -8,9 +8,13 @@ import { getDiscoveryQuestions } from '../briefs/utils';
  * Allows filtering questions by industry and client role.
  * Fetches questions from an API, with a fallback to local utilities.
  */
-const KeyQuestions = () => {
+interface KeyQuestionsProps {
+    defaultIndustry?: string;
+}
+
+const KeyQuestions: React.FC<KeyQuestionsProps> = ({ defaultIndustry }) => {
     // State for filter selection
-    const [selectedIndustry, setSelectedIndustry] = useState(industries[0]);
+    const [selectedIndustry, setSelectedIndustry] = useState(defaultIndustry || industries[0]);
     const [selectedRole, setSelectedRole] = useState<string>('');
 
     // State for question data and loading status
@@ -29,6 +33,13 @@ const KeyQuestions = () => {
         const local = getDiscoveryQuestions(selectedIndustry || '').slice(0, 6);
         return [{ role: selectedRole || 'All Roles', categories: [{ name: 'General', questions: local }] }];
     }, [selectedIndustry, selectedRole]);
+
+    // Keep industry in sync with global selection
+    useEffect(() => {
+        if (defaultIndustry) {
+            setSelectedIndustry(defaultIndustry);
+        }
+    }, [defaultIndustry]);
 
     // Fetch questions whenever industry or role selection changes
     useEffect(() => {

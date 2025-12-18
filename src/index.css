@@ -4,4 +4,124 @@
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --pa-white: #ffffff;
+  --pa-gray-very-light: #f3f3f3;
+  --pa-blue-gray-light: #c5d9db;
+  --pa-petrol: #4b7088;
+  --pa-blue-gray-pale: #ebf1f3;
+  --pa-gray-light: #fafafa;
+  --pa-gray-medium-light: #f5f5f5;
+  --pa-white-warm: #fffdfd;
+  --pa-white-bone: #fffffe;
+  --pa-gray-beige: #f3f3f2;
+  --pa-gray-bluish: #f3f4f5;
+  --pa-pink-pale: #f8f0f3;
+}
+
+body {
+  background-color: var(--pa-white-bone);
+  color: var(--pa-petrol);
+}
+
+main, .app-shell {
+  background: radial-gradient(circle at 20% 20%, rgba(75, 112, 136, 0.06), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(235, 241, 243, 0.5), transparent 40%),
+    var(--pa-gray-beige);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--pa-petrol);
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--pa-petrol);
+}
+
+a:hover {
+  color: #3e5d73;
+}
+
+/* Card and panel surfaces */
+.bg-white {
+  background-color: var(--pa-white-warm) !important;
+}
+
+.bg-gray-50 {
+  background-color: var(--pa-gray-light) !important;
+}
+
+.bg-gray-100 {
+  background-color: var(--pa-gray-very-light) !important;
+}
+
+.border-gray-100 {
+  border-color: var(--pa-blue-gray-pale) !important;
+}
+
+.border-gray-200 {
+  border-color: var(--pa-gray-very-light) !important;
+}
+
+.shadow-sm {
+  box-shadow: 0px 12px 30px rgba(75, 112, 136, 0.08) !important;
+}
+
+.shadow-md {
+  box-shadow: 0px 16px 36px rgba(75, 112, 136, 0.12) !important;
+}
+
+/* Form elements */
+label {
+  color: var(--pa-petrol);
+}
+
+input,
+select,
+textarea {
+  background-color: var(--pa-white-warm);
+  color: var(--pa-petrol);
+  border-color: var(--pa-blue-gray-light);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--pa-petrol);
+  box-shadow: 0 0 0 0.2rem rgba(75, 112, 136, 0.12);
+}
+
+/* Buttons */
+button {
+  transition: all 0.2s ease;
+}
+
+.bg-primary-50,
+.bg-primary-100 {
+  background-color: var(--pa-blue-gray-pale) !important;
+  color: var(--pa-petrol) !important;
+}
+
+.bg-primary-600 {
+  background-color: var(--pa-petrol) !important;
+}
+
+.bg-primary-600:hover {
+  background-color: #3e7273 !important;
+}
+
+.text-primary-600 {
+  color: var(--pa-petrol) !important;
+}
+
+/* Pills and badges */
+.rounded-full {
+  background-color: var(--pa-gray-medium-light);
+}
+
+/* Gradient hero/sections */
+.gradient-panel {
+  background: linear-gradient(135deg, rgba(75, 112, 136, 0.16), rgba(235, 241, 243, 0.5));
+  border: 1px solid var(--pa-blue-gray-pale);
+  box-shadow: 0 20px 40px rgba(75, 112, 136, 0.1);
 }
