@@ -121,7 +121,7 @@ const PresalesHub = () => {
     setBriefData(prev => ({ ...prev, industry: globalIndustry }));
   }, [globalIndustry]);
 
-  const requiresIndustry = (sectionId: string) => sectionId !== 'prospect-analyzer';
+  const requiresIndustry = (sectionId: string) => sectionId !== 'prospect-analyzer' && sectionId !== 'dashboard';
 
   const handleNavigate = (sectionId: string) => {
     if (requiresIndustry(sectionId) && !globalIndustry) {
@@ -148,13 +148,18 @@ const PresalesHub = () => {
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
       <header className="bg-primary-700 text-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() => handleNavigate('dashboard')}
+          className="max-w-7xl mx-auto px-6 py-3 flex items-center gap-3 w-full text-left"
+          aria-label="Go to Dashboard"
+        >
           <img src={headerLogo} alt="Presales Hub logo" className="h-10 w-auto drop-shadow-sm" />
           <div className="flex flex-col leading-tight">
             <span className="text-lg font-semibold tracking-tight">Presales Hub</span>
             <span className="text-xs font-medium text-white/80">Intelligence Center</span>
           </div>
-        </div>
+        </button>
       </header>
 
       <div className={`flex min-h-[calc(100vh-64px)] ${sidebarPosition === 'right' ? 'flex-row-reverse' : ''}`}>
