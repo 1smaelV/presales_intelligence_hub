@@ -23,19 +23,25 @@ interface DashboardProps {
     onNavigate: (sectionId: string) => void;
     /** Global industry value */
     industry: string;
+    /** Whether selection changes are locked until reset */
+    selectionLocked: boolean;
     /** Setter for global industry */
     setIndustry: (value: string) => void;
     /** Global offering value */
     offering: string;
     /** Setter for global offering */
     setOffering: (value: string) => void;
+    /** Reset handler to clear selection and unlock */
+    onResetSelections: () => void;
+    /** Track external access for locking */
+    onExternalAccess: (sectionId: string) => void;
 }
 
 /**
  * Main dashboard component acting as the landing page and navigation hub.
  * Displays summary cards for different features and a quick-start guide.
  */
-const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry, offering, setOffering }) => {
+const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry, selectionLocked, offering, setOffering, onResetSelections, onExternalAccess }) => {
     return (
         <div className="space-y-6">
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
@@ -47,9 +53,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                     <div className="flex flex-col">
                         <label className="text-xs font-semibold text-gray-600 mb-1">Industry</label>
                         <select
-                            className="min-w-[200px] border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400"
+                            className={`min-w-[200px] border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 ${selectionLocked ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                             value={industry}
                             onChange={(e) => setIndustry(e.target.value)}
+                            disabled={selectionLocked}
                         >
                             <option value="">Select industry...</option>
                             {industries.map(ind => (
@@ -60,9 +67,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                     <div className="flex flex-col">
                         <label className="text-xs font-semibold text-gray-600 mb-1">Offering</label>
                         <select
-                            className="min-w-[220px] border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400"
+                            className={`min-w-[220px] border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 ${selectionLocked ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                             value={offering}
                             onChange={(e) => setOffering(e.target.value)}
+                            disabled={selectionLocked}
                         >
                             {offerings.map(opt => (
                                 <option key={opt} value={opt === 'Select Offering...' ? '' : opt}>
@@ -73,10 +81,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                     </div>
                     <button
                         type="button"
-                        onClick={() => {
-                            setIndustry('');
-                            setOffering('');
-                        }}
+                        onClick={onResetSelections}
                         className="inline-flex items-center gap-2 px-3 py-2 text-sm font-semibold text-primary-700 bg-primary-50 border border-primary-100 rounded-lg hover:bg-primary-100 transition-colors"
                     >
                         <RefreshCcw className="w-4 h-4" />
@@ -128,6 +133,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer relative overflow-hidden block"
+                    onClick={() => onExternalAccess('development-framework')}
                 >
                     <div className="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-full translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-500 opacity-50" />
                     <div className="relative z-10">
@@ -184,6 +190,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer relative overflow-hidden block"
+                    onClick={() => onExternalAccess('prospect-analyzer')}
                 >
                     <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-full translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-500 opacity-50" />
                     <div className="relative z-10">

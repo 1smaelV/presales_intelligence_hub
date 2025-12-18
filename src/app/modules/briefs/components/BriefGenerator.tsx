@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { industries, meetingTypes, clientRoles, BriefData, GeneratedBrief } from '../constants';
 import { persistBriefResult } from '../api';
 import { generateExecutiveBrief } from '../../../ai/briefAgent';
@@ -12,9 +12,11 @@ import { AIProvider } from '../../../ai/types';
  */
 interface BriefGeneratorProps {
     briefData: BriefData;
-    setBriefData: (data: BriefData) => void;
+    setBriefData: Dispatch<SetStateAction<BriefData>>;
     generatedBrief: GeneratedBrief | null;
     setGeneratedBrief: (brief: GeneratedBrief | null) => void;
+    selectionLocked: boolean;
+    lockedIndustry?: string;
 }
 
 /**
@@ -77,7 +79,9 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
     briefData,
     setBriefData,
     generatedBrief,
-    setGeneratedBrief
+    setGeneratedBrief,
+    selectionLocked,
+    lockedIndustry
 }) => {
 
     const [isLoading, setIsLoading] = useState(false);
@@ -101,6 +105,12 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
             provider: 'gemini'
         }
     ];
+
+    useEffect(() => {
+        if (selectionLocked && lockedIndustry && briefData.industry !== lockedIndustry) {
+            setBriefData((prev: BriefData) => ({ ...prev, industry: lockedIndustry }));
+        }
+    }, [selectionLocked, lockedIndustry, briefData.industry, setBriefData]);
 
     /**
      * Triggers the AI generation process.
@@ -175,7 +185,12 @@ const BriefGenerator: React.FC<BriefGeneratorProps> = ({
                     <div className="space-y-6">
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Industry</label>
-                            <select className="w-full border border-gray-300 rounded-lg px-4 py-3" value={briefData.industry} onChange={(e) => setBriefData({ ...briefData, industry: e.target.value })}>
+                            <select
+                                className={`w-full border border-gray-300 rounded-lg px-4 py-3 ${selectionLocked ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+                                value={briefData.industry}
+                                onChange={(e) => setBriefData({ ...briefData, industry: e.target.value })}
+                                disabled={selectionLocked}
+                            >
                                 <option value="">Select industry...</option>
                                 {industries.map(i => <option key={i} value={i}>{i}</option>)}
                             </select>

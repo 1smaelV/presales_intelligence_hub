@@ -52,6 +52,7 @@ const PresalesHub = () => {
   const [showGuardModal, setShowGuardModal] = useState(false);
   const [modalIndustry, setModalIndustry] = useState<string>('');
   const [modalOffering, setModalOffering] = useState<string>('');
+  const [isSelectionLocked, setIsSelectionLocked] = useState(false);
 
   const navigation = [
     { id: 'dashboard', name: 'Dashboard', icon: Home, active: true },
@@ -64,7 +65,6 @@ const PresalesHub = () => {
     { id: 'key-questions', name: 'Key Questions', icon: MessageSquare, active: true },
     { id: 'prospect-analyzer', name: 'Prospect Analyzer', icon: LineChart, active: true, external: true, href: 'https://prospect-analyzer.onrender.com/dashboard' },
     { id: 'talking-points', name: 'Talking Points', icon: BookOpen, active: true },
-    { id: 'concepts', name: 'Concept Library', icon: Layers, active: false },
     { id: 'platforms', name: 'Platforms & Tools', icon: Wrench, active: false },
     { id: 'team-skills', name: 'Team Capabilities', icon: Users, active: false },
     { id: 'training', name: 'Training Plans', icon: GraduationCap, active: false },
@@ -77,9 +77,12 @@ const PresalesHub = () => {
           <Dashboard
             onNavigate={handleNavigate}
             industry={globalIndustry}
+            selectionLocked={isSelectionLocked}
             setIndustry={setGlobalIndustry}
             offering={globalOffering}
             setOffering={setGlobalOffering}
+            onResetSelections={handleResetSelections}
+            onExternalAccess={handleExternalAccess}
           />
         );
       case 'brief-generator':
@@ -89,10 +92,12 @@ const PresalesHub = () => {
             setBriefData={setBriefData}
             generatedBrief={generatedBrief}
             setGeneratedBrief={setGeneratedBrief}
+            selectionLocked={isSelectionLocked}
+            lockedIndustry={globalIndustry}
           />
         );
       case 'brief-history':
-        return <BriefHistory defaultIndustry={globalIndustry || undefined} />;
+        return <BriefHistory defaultIndustry={globalIndustry || undefined} selectionLocked={isSelectionLocked} lockedIndustry={globalIndustry} />;
       case 'agentic-use-cases':
         return <ComingSoon title="Agentic Use Cases" description="Curated agentic AI patterns by industry and workflow" />;
       case 'value-proposition':
@@ -100,7 +105,7 @@ const PresalesHub = () => {
       case 'case-studies':
         return <CaseStudies />;
       case 'key-questions':
-        return <KeyQuestions defaultIndustry={globalIndustry || undefined} />;
+        return <KeyQuestions defaultIndustry={globalIndustry || undefined} selectionLocked={isSelectionLocked} />;
       case 'talking-points':
         return <TalkingPoints />;
       case 'concepts':
@@ -116,9 +121,12 @@ const PresalesHub = () => {
           <Dashboard
             onNavigate={handleNavigate}
             industry={globalIndustry}
+            selectionLocked={isSelectionLocked}
             setIndustry={setGlobalIndustry}
             offering={globalOffering}
             setOffering={setGlobalOffering}
+            onResetSelections={handleResetSelections}
+            onExternalAccess={handleExternalAccess}
           />
         );
     }
@@ -128,7 +136,19 @@ const PresalesHub = () => {
     setBriefData(prev => ({ ...prev, industry: globalIndustry }));
   }, [globalIndustry]);
 
+  useEffect(() => {
+    if (activeSection !== 'dashboard') {
+      setIsSelectionLocked(true);
+    }
+  }, [activeSection]);
+
   const requiresIndustry = (sectionId: string) => sectionId !== 'prospect-analyzer' && sectionId !== 'dashboard' && sectionId !== 'development-framework';
+
+  const lockSelections = (sectionId?: string) => {
+    if (sectionId === 'prospect-analyzer' || sectionId === 'dashboard') return;
+    if (!globalIndustry) return;
+    setIsSelectionLocked(true);
+  };
 
   const handleNavigate = (sectionId: string) => {
     if (requiresIndustry(sectionId) && !globalIndustry) {
@@ -139,6 +159,7 @@ const PresalesHub = () => {
       return;
     }
     setActiveSection(sectionId);
+    lockSelections(sectionId);
   };
 
   const handleGuardSubmit = () => {
@@ -148,8 +169,20 @@ const PresalesHub = () => {
     setShowGuardModal(false);
     if (pendingSection) {
       setActiveSection(pendingSection);
+      lockSelections(pendingSection);
       setPendingSection(null);
     }
+  };
+
+  const handleResetSelections = () => {
+    setGlobalIndustry('');
+    setGlobalOffering('');
+    setIsSelectionLocked(false);
+    setBriefData(prev => ({ ...prev, industry: '' }));
+  };
+
+  const handleExternalAccess = (sectionId: string) => {
+    lockSelections(sectionId);
   };
 
   return (
@@ -199,17 +232,18 @@ const PresalesHub = () => {
             {navigation.map(item => {
               const Icon = item.icon;
 
-              if ((item as any).external) {
-                return (
-                  <a
-                    key={item.id}
-                    href={(item as any).href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center' : ''} px-3 py-3 text-sm font-medium rounded-xl transition-all duration-200 group text-gray-600 hover:bg-gray-50 hover:text-gray-900`}
-                    title={isSidebarCollapsed ? item.name : undefined}
-                    aria-label={isSidebarCollapsed ? item.name : undefined}
-                  >
+            if ((item as any).external) {
+              return (
+                <a
+                  key={item.id}
+                  href={(item as any).href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => handleExternalAccess(item.id)}
+                  className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center' : ''} px-3 py-3 text-sm font-medium rounded-xl transition-all duration-200 group text-gray-600 hover:bg-gray-50 hover:text-gray-900`}
+                  title={isSidebarCollapsed ? item.name : undefined}
+                  aria-label={isSidebarCollapsed ? item.name : undefined}
+                >
                     <Icon className={`w-5 h-5 ${!isSidebarCollapsed ? 'mr-3' : ''} transition-colors text-gray-400 group-hover:text-gray-600`} />
                   {!isSidebarCollapsed && (
                     <div className="flex items-center justify-between w-full">

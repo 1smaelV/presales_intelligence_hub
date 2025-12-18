@@ -10,9 +10,10 @@ import { getDiscoveryQuestions } from '../briefs/utils';
  */
 interface KeyQuestionsProps {
     defaultIndustry?: string;
+    selectionLocked?: boolean;
 }
 
-const KeyQuestions: React.FC<KeyQuestionsProps> = ({ defaultIndustry }) => {
+const KeyQuestions: React.FC<KeyQuestionsProps> = ({ defaultIndustry, selectionLocked }) => {
     // State for filter selection
     const [selectedIndustry, setSelectedIndustry] = useState(defaultIndustry || industries[0]);
     const [selectedRole, setSelectedRole] = useState<string>('');
@@ -40,6 +41,12 @@ const KeyQuestions: React.FC<KeyQuestionsProps> = ({ defaultIndustry }) => {
             setSelectedIndustry(defaultIndustry);
         }
     }, [defaultIndustry]);
+
+    useEffect(() => {
+        if (selectionLocked && defaultIndustry) {
+            setSelectedIndustry(defaultIndustry);
+        }
+    }, [selectionLocked, defaultIndustry]);
 
     // Fetch questions whenever industry or role selection changes
     useEffect(() => {
@@ -84,9 +91,10 @@ const KeyQuestions: React.FC<KeyQuestionsProps> = ({ defaultIndustry }) => {
                         <div className="bg-white/10 border border-white/20 rounded-lg px-4 py-3">
                             <label className="text-xs uppercase tracking-wide text-blue-100 font-semibold block mb-2">Industry</label>
                             <select
-                                className="bg-blue-800 text-white px-3 py-2 rounded-md border border-white/20 focus:border-white/40 focus:outline-none min-w-[200px]"
+                                className={`bg-blue-800 text-white px-3 py-2 rounded-md border border-white/20 focus:border-white/40 focus:outline-none min-w-[200px] ${selectionLocked ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 value={selectedIndustry}
                                 onChange={(e) => setSelectedIndustry(e.target.value)}
+                                disabled={selectionLocked}
                             >
                                 {industries.map(ind => (
                                     <option key={ind} value={ind}>{ind}</option>

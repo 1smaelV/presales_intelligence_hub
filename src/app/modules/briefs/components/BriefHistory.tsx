@@ -11,9 +11,11 @@ const formatDate = (value: string | null) => {
 
 interface BriefHistoryProps {
     defaultIndustry?: string;
+    selectionLocked?: boolean;
+    lockedIndustry?: string;
 }
 
-const BriefHistory: React.FC<BriefHistoryProps> = ({ defaultIndustry }) => {
+const BriefHistory: React.FC<BriefHistoryProps> = ({ defaultIndustry, selectionLocked, lockedIndustry }) => {
     const [briefs, setBriefs] = useState<BriefHistoryItem[]>([]);
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [filters, setFilters] = useState<{ industry?: string; clientRole?: string }>(() => (defaultIndustry ? { industry: defaultIndustry } : {}));
@@ -58,6 +60,12 @@ const BriefHistory: React.FC<BriefHistoryProps> = ({ defaultIndustry }) => {
         }
     }, [defaultIndustry]);
 
+    useEffect(() => {
+        if (selectionLocked && lockedIndustry) {
+            setFilters(prev => ({ ...prev, industry: lockedIndustry }));
+        }
+    }, [selectionLocked, lockedIndustry]);
+
     return (
         <div className="space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
@@ -81,9 +89,10 @@ const BriefHistory: React.FC<BriefHistoryProps> = ({ defaultIndustry }) => {
                     <div className="space-y-2">
                         <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Industry</label>
                         <select
-                            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800"
+                            className={`w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 ${selectionLocked ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                             value={filters.industry || ''}
                             onChange={e => setFilters(prev => ({ ...prev, industry: e.target.value || undefined }))}
+                            disabled={selectionLocked}
                         >
                             <option value="">All industries</option>
                             {industries.map(ind => (
