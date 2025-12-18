@@ -102,7 +102,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                             <Sparkles className="w-8 h-8 text-primary-600 group-hover:text-white transition-colors duration-300" />
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 mb-3">General Meeting Prep</h3>
-                        <p className="text-gray-500 mb-5 leading-relaxed">Generate personalized AI-powered prep for any meeting in seconds.</p>
+                        <p className="text-gray-500 mb-5 leading-relaxed">Get AI-personalized meeting prep in seconds, including a custom elevator pitch, smart discovery questions, and key industry insights.</p>
                         <span className="flex items-center text-primary-600 font-semibold group-hover:translate-x-2 transition-transform duration-200">
                             Get Started <span className="ml-2">-&gt;</span>
                         </span>
@@ -197,8 +197,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                         <div className="bg-purple-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-purple-600 transition-colors duration-300">
                             <LineChart className="w-8 h-8 text-purple-600 group-hover:text-white transition-colors duration-300" />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">Prospect Analyzer</h3>
-                        <p className="text-gray-500 mb-5 leading-relaxed">External tool for deep dive analysis into prospect data.</p>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3">Customer Intelligence</h3>
+                        <p className="text-gray-500 mb-5 leading-relaxed">Tool that consolidates data and AI insights to deeply analyze prospects and accounts.</p>
                         <span className="flex items-center text-purple-600 font-semibold group-hover:translate-x-2 transition-transform duration-200">
                             Open Analyzer <ArrowUpRight className="ml-2 w-4 h-4" />
                         </span>

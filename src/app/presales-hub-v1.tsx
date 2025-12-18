@@ -63,7 +63,7 @@ const PresalesHub = () => {
     { id: 'brief-history', name: 'Brief History', icon: History, active: true },
     { id: 'case-studies', name: 'Case Studies', icon: FileText, active: true },
     { id: 'key-questions', name: 'Key Questions', icon: MessageSquare, active: true },
-    { id: 'prospect-analyzer', name: 'Prospect Analyzer', icon: LineChart, active: true, external: true, href: 'https://prospect-analyzer.onrender.com/dashboard' },
+    { id: 'prospect-analyzer', name: 'Customer Intelligence', icon: LineChart, active: true, external: true, href: 'https://prospect-analyzer.onrender.com/dashboard' },
     { id: 'talking-points', name: 'Talking Points', icon: BookOpen, active: true },
     { id: 'platforms', name: 'Platforms & Tools', icon: Wrench, active: false },
     { id: 'team-skills', name: 'Team Capabilities', icon: Users, active: false },
@@ -232,26 +232,26 @@ const PresalesHub = () => {
             {navigation.map(item => {
               const Icon = item.icon;
 
-            if ((item as any).external) {
-              return (
-                <a
-                  key={item.id}
-                  href={(item as any).href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => handleExternalAccess(item.id)}
-                  className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center' : ''} px-3 py-3 text-sm font-medium rounded-xl transition-all duration-200 group text-gray-600 hover:bg-gray-50 hover:text-gray-900`}
-                  title={isSidebarCollapsed ? item.name : undefined}
-                  aria-label={isSidebarCollapsed ? item.name : undefined}
-                >
+              if ((item as any).external) {
+                return (
+                  <a
+                    key={item.id}
+                    href={(item as any).href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => handleExternalAccess(item.id)}
+                    className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center' : ''} px-3 py-3 text-sm font-medium rounded-xl transition-all duration-200 group text-gray-600 hover:bg-gray-50 hover:text-gray-900`}
+                    title={isSidebarCollapsed ? item.name : undefined}
+                    aria-label={isSidebarCollapsed ? item.name : undefined}
+                  >
                     <Icon className={`w-5 h-5 ${!isSidebarCollapsed ? 'mr-3' : ''} transition-colors text-gray-400 group-hover:text-gray-600`} />
-                  {!isSidebarCollapsed && (
-                    <div className="flex items-center justify-between w-full">
-                      <span>{item.name}</span>
-                      <ArrowUpRight className="w-4 h-4 text-gray-400" />
-                    </div>
-                  )}
-                </a>
+                    {!isSidebarCollapsed && (
+                      <div className="flex items-center justify-between w-full">
+                        <span>{item.name}</span>
+                        <ArrowUpRight className="w-4 h-4 text-gray-400" />
+                      </div>
+                    )}
+                  </a>
                 );
               }
 
@@ -301,12 +301,12 @@ const PresalesHub = () => {
           </div>
         </div>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-y-auto bg-gray-50/50">
-        <div className="max-w-7xl mx-auto p-8 animate-in fade-in duration-500 space-y-6">
-          {renderContent()}
+        {/* Main Content */}
+        <div className="flex-1 overflow-y-auto bg-gray-50/50">
+          <div className="max-w-7xl mx-auto p-8 animate-in fade-in duration-500 space-y-6">
+            {renderContent()}
+          </div>
         </div>
-      </div>
       </div>
 
       {showGuardModal && (
