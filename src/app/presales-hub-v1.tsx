@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Home, FileText, Users, MessageSquare, BookOpen, Wrench, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart, PanelLeft, PanelRight } from 'lucide-react';
+import { Home, FileText, Users, MessageSquare, BookOpen, Wrench, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart, PanelLeft, PanelRight, ArrowUpRight, Bot, BadgeCheck } from 'lucide-react';
 import headerLogo from './assets/img/image.png';
 import { BriefData, GeneratedBrief } from './modules/briefs/constants';
 import Dashboard from './modules/dashboard/Dashboard';
@@ -56,6 +56,9 @@ const PresalesHub = () => {
   const navigation = [
     { id: 'dashboard', name: 'Dashboard', icon: Home, active: true },
     { id: 'brief-generator', name: 'General Meeting Prep', icon: Sparkles, active: true },
+    { id: 'agentic-use-cases', name: 'Agentic Use Cases', icon: Bot, active: true },
+    { id: 'development-framework', name: 'Development Framework', icon: Layers, active: true, external: true, href: 'https://www.concentrix.com/services-solutions/agentic-ai/' },
+    { id: 'value-proposition', name: 'Value Proposition', icon: BadgeCheck, active: true },
     { id: 'brief-history', name: 'Brief History', icon: History, active: true },
     { id: 'case-studies', name: 'Case Studies', icon: FileText, active: true },
     { id: 'key-questions', name: 'Key Questions', icon: MessageSquare, active: true },
@@ -90,6 +93,10 @@ const PresalesHub = () => {
         );
       case 'brief-history':
         return <BriefHistory defaultIndustry={globalIndustry || undefined} />;
+      case 'agentic-use-cases':
+        return <ComingSoon title="Agentic Use Cases" description="Curated agentic AI patterns by industry and workflow" />;
+      case 'value-proposition':
+        return <ComingSoon title="Value Proposition" description="Proof points, ROI levers, and differentiators" />;
       case 'case-studies':
         return <CaseStudies />;
       case 'key-questions':
@@ -121,7 +128,7 @@ const PresalesHub = () => {
     setBriefData(prev => ({ ...prev, industry: globalIndustry }));
   }, [globalIndustry]);
 
-  const requiresIndustry = (sectionId: string) => sectionId !== 'prospect-analyzer' && sectionId !== 'dashboard';
+  const requiresIndustry = (sectionId: string) => sectionId !== 'prospect-analyzer' && sectionId !== 'dashboard' && sectionId !== 'development-framework';
 
   const handleNavigate = (sectionId: string) => {
     if (requiresIndustry(sectionId) && !globalIndustry) {
@@ -204,13 +211,13 @@ const PresalesHub = () => {
                     aria-label={isSidebarCollapsed ? item.name : undefined}
                   >
                     <Icon className={`w-5 h-5 ${!isSidebarCollapsed ? 'mr-3' : ''} transition-colors text-gray-400 group-hover:text-gray-600`} />
-                    {!isSidebarCollapsed && (
-                      <div className="flex items-center justify-between w-full">
-                        <span>{item.name}</span>
-                        <span className="ml-2 text-xs text-gray-400">ƒÅ-</span>
-                      </div>
-                    )}
-                  </a>
+                  {!isSidebarCollapsed && (
+                    <div className="flex items-center justify-between w-full">
+                      <span>{item.name}</span>
+                      <ArrowUpRight className="w-4 h-4 text-gray-400" />
+                    </div>
+                  )}
+                </a>
                 );
               }
 
