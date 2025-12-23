@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import PartnerDetail, { PartnerData } from './PartnerDetail';
+import useCase1 from '../../assets/use_case/Gemini_Generated_Image_3729o13729o13729.png';
+import useCase2 from '../../assets/use_case/Gemini_Generated_Image_9wsu5n9wsu5n9wsu.png';
+import useCase3 from '../../assets/use_case/Gemini_Generated_Image_au4kziau4kziau4k.png';
 
 const partnersData: PartnerData[] = [
     {
@@ -11,17 +14,17 @@ const partnersData: PartnerData[] = [
             {
                 title: 'Intelligent Call Routing',
                 description: 'Dynamically routes calls based on caller intent and agent availability using AI-driven scoring.',
-                imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000'
+                imageUrl: useCase1
             },
             {
                 title: 'Real-Time Agent Assist',
                 description: 'Proactively surfaces relevant knowledge base articles and talking points during live calls.',
-                imageUrl: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=1000'
+                imageUrl: useCase2
             },
             {
                 title: 'Automated Post-Call Analysis',
                 description: 'Analyzes call transcripts to extract key insights, sentiment, and follow-up actions automatically.',
-                imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000'
+                imageUrl: useCase3
             }
         ],
         caseStudies: [
