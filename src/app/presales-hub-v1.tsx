@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Home, FileText, Users, MessageSquare, BookOpen, Wrench, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart, PanelLeft, PanelRight, ArrowUpRight, Bot, BadgeCheck } from 'lucide-react';
+import { Home, FileText, Users, MessageSquare, BookOpen, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart, PanelLeft, PanelRight, ArrowUpRight, Bot, BadgeCheck, Handshake } from 'lucide-react';
 import headerLogo from './assets/img/image.png';
 import { BriefData, GeneratedBrief } from './modules/briefs/constants';
 import Dashboard from './modules/dashboard/Dashboard';
@@ -8,6 +8,7 @@ import BriefHistory from './modules/briefs/components/BriefHistory';
 import CaseStudies from './modules/knowledge-base/CaseStudies';
 import KeyQuestions from './modules/knowledge-base/KeyQuestions';
 import TalkingPoints from './modules/knowledge-base/TalkingPoints';
+import Partners from './modules/partners/Partners';
 import ComingSoon from './modules/placeholders/ComingSoon';
 
 const offeringOptions = [
@@ -65,7 +66,7 @@ const PresalesHub = () => {
     { id: 'key-questions', name: 'Key Questions', icon: MessageSquare, active: true },
     { id: 'prospect-analyzer', name: 'Customer Intelligence', icon: LineChart, active: true, external: true, href: 'https://prospect-analyzer.onrender.com/dashboard' },
     { id: 'talking-points', name: 'Talking Points', icon: BookOpen, active: true },
-    { id: 'platforms', name: 'Platforms & Tools', icon: Wrench, active: false },
+    { id: 'platforms', name: 'Partners', icon: Handshake, active: true },
     { id: 'team-skills', name: 'Team Capabilities', icon: Users, active: false },
     { id: 'training', name: 'Training Plans', icon: GraduationCap, active: false },
   ];
@@ -111,7 +112,7 @@ const PresalesHub = () => {
       case 'concepts':
         return <ComingSoon title="Agentic AI Concept Library" description="Comprehensive definitions and explanations" />;
       case 'platforms':
-        return <ComingSoon title="Platforms, Tools & Architecture" description="Technical overview and partner ecosystem" />;
+        return <Partners />;
       case 'team-skills':
         return <ComingSoon title="Team Capabilities" description="Skills and expertise overview" />;
       case 'training':
@@ -142,10 +143,10 @@ const PresalesHub = () => {
     }
   }, [activeSection]);
 
-  const requiresIndustry = (sectionId: string) => sectionId !== 'prospect-analyzer' && sectionId !== 'dashboard' && sectionId !== 'development-framework';
+  const requiresIndustry = (sectionId: string) => sectionId !== 'prospect-analyzer' && sectionId !== 'dashboard' && sectionId !== 'development-framework' && sectionId !== 'platforms';
 
   const lockSelections = (sectionId?: string) => {
-    if (sectionId === 'prospect-analyzer' || sectionId === 'dashboard') return;
+    if (sectionId === 'prospect-analyzer' || sectionId === 'dashboard' || sectionId === 'platforms') return;
     if (!globalIndustry) return;
     setIsSelectionLocked(true);
   };
