@@ -46,12 +46,16 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
 
     const nextSlide = (e: React.MouseEvent) => {
         e.stopPropagation();
-        setCurrentSlide((prev) => (prev + 1) % partner.useCases.length);
+        const nextIndex = (currentSlide + 1) % partner.useCases.length;
+        setCurrentSlide(nextIndex);
+        setCardStartIndex(nextIndex);
     };
 
     const prevSlide = (e: React.MouseEvent) => {
         e.stopPropagation();
-        setCurrentSlide((prev) => (prev - 1 + partner.useCases.length) % partner.useCases.length);
+        const prevIndex = (currentSlide - 1 + partner.useCases.length) % partner.useCases.length;
+        setCurrentSlide(prevIndex);
+        setCardStartIndex(prevIndex);
     };
 
     return (
@@ -131,6 +135,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                                 if (index !== currentSlide) {
                                                     e.stopPropagation();
                                                     setCurrentSlide(index);
+                                                    setCardStartIndex(index);
                                                 }
                                             }}
                                         >
@@ -204,6 +209,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 setCurrentSlide(idx);
+                                                setCardStartIndex(idx);
                                             }}
                                             className={`
                                                 h-1.5 rounded-full transition-all duration-300 
@@ -234,6 +240,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                                         setViewImage(useCase.imageUrl);
                                                     } else {
                                                         setCurrentSlide(idx);
+                                                        setCardStartIndex(idx);
                                                     }
                                                 }}
                                                 className={`text-left p-4 rounded-xl border transition-all h-full ${currentSlide === idx
