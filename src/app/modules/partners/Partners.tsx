@@ -44,6 +44,11 @@ const partnersData: PartnerData[] = [
                 title: 'Retailer Customer Loyalty',
                 summary: 'Major retailer saw a 15% increase in CSAT scores after deploying personalized routing strategies.',
                 result: '+15% CSAT Score'
+            },
+            {
+                title: 'Healthcare Efficient Care',
+                summary: 'A national healthcare provider optimized patient triage, reducing wait times for critical inquiries.',
+                result: '30% Faster Triage'
             }
         ]
     },
