@@ -141,7 +141,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                         >
                                             <div
                                                 className={`
-                                                    relative w-full h-full rounded-xl overflow-hidden shadow-2xl bg-black group
+                                                    relative w-full h-full rounded-xl overflow-hidden shadow-2xl bg-black group/image
                                                     ${index === currentSlide ? 'cursor-zoom-in ring-1 ring-white/20' : ''}
                                                 `}
                                                 onClick={() => index === currentSlide && setViewImage(useCase.imageUrl)}
@@ -149,14 +149,14 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                                 <img
                                                     src={useCase.imageUrl}
                                                     alt={useCase.title}
-                                                    className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                                                    className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover/image:scale-105"
                                                 />
 
                                                 {/* Text Overlay - Only active */}
                                                 <div
                                                     className={`
                                                         absolute inset-0 flex flex-col justify-end p-4 pointer-events-none transition-opacity duration-500 delay-100
-                                                        ${index === currentSlide ? 'opacity-100 group-hover:opacity-0' : 'opacity-0'}
+                                                        ${index === currentSlide ? 'opacity-100 group-hover/image:opacity-0' : 'opacity-0'}
                                                     `}
                                                 >
                                                     <div
@@ -170,7 +170,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
 
                                                 {/* Zoom Cue Overlay - Only active */}
                                                 {index === currentSlide && (
-                                                    <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 pointer-events-none">
+                                                    <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 bg-black/20 pointer-events-none">
                                                         <div
                                                             className="backdrop-blur-sm p-3 rounded-full mb-2 shadow-lg"
                                                             style={{ backgroundColor: '#005f6b' }}
