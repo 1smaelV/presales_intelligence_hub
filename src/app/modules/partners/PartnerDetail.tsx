@@ -141,7 +141,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                         >
                                             <div
                                                 className={`
-                                                    relative w-full h-full rounded-xl overflow-hidden shadow-2xl bg-black
+                                                    relative w-full h-full rounded-xl overflow-hidden shadow-2xl bg-black group
                                                     ${index === currentSlide ? 'cursor-zoom-in ring-1 ring-white/20' : ''}
                                                 `}
                                                 onClick={() => index === currentSlide && setViewImage(useCase.imageUrl)}
@@ -156,7 +156,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                                 <div
                                                     className={`
                                                         absolute inset-0 flex flex-col justify-end p-4 pointer-events-none transition-opacity duration-500 delay-100
-                                                        ${index === currentSlide ? 'opacity-100' : 'opacity-0'}
+                                                        ${index === currentSlide ? 'opacity-100 group-hover:opacity-0' : 'opacity-0'}
                                                     `}
                                                 >
                                                     <div
