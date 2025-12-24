@@ -155,13 +155,16 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                                 {/* Text Overlay - Only active */}
                                                 <div
                                                     className={`
-                                                        absolute inset-0 flex flex-col justify-end p-6 pointer-events-none transition-opacity duration-500 delay-100
+                                                        absolute inset-0 flex flex-col justify-end p-4 pointer-events-none transition-opacity duration-500 delay-100
                                                         ${index === currentSlide ? 'opacity-100' : 'opacity-0'}
                                                     `}
                                                 >
-                                                    <div className="bg-gray-900/80 backdrop-blur-md border-l-4 border-primary-500 p-4 rounded-r-lg max-w-xl shadow-lg transform translate-y-0 transition-transform duration-500">
-                                                        <h3 className="text-xl font-bold mb-1 text-white">{useCase.title}</h3>
-                                                        <p className="text-white/90 text-sm leading-relaxed">{useCase.description}</p>
+                                                    <div
+                                                        className="backdrop-blur-md border-l-4 border-primary-500 p-3 rounded-r-lg max-w-md shadow-lg transform translate-y-0 transition-transform duration-500"
+                                                        style={{ backgroundColor: 'rgba(0, 95, 107, 0.5)' }}
+                                                    >
+                                                        <h3 className="text-lg font-bold mb-0.5 text-white">{useCase.title}</h3>
+                                                        <p className="text-white/90 text-xs leading-relaxed">{useCase.description}</p>
                                                     </div>
                                                 </div>
 
