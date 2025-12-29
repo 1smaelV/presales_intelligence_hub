@@ -38,17 +38,20 @@ const partnersData: PartnerData[] = [
             {
                 title: 'Global Bank Transformation',
                 summary: 'A leading global bank reduced average handling time by 25% by implementing Genesys-integrated agent assist tools.',
-                result: '25% Reduction in AHT'
+                result: '25% Reduction in AHT',
+                url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-BFS-083-2024-10-10%20Collections.pptx?d=w81bd5f0b76b74269a1bca96b1d3b9d53&csf=1&web=1&e=eYuShn'
             },
             {
                 title: 'Retailer Customer Loyalty',
                 summary: 'Major retailer saw a 15% increase in CSAT scores after deploying personalized routing strategies.',
-                result: '+15% CSAT Score'
+                result: '+15% CSAT Score',
+                url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-BFS-083-2024-10-10%20Collections.pptx?d=w81bd5f0b76b74269a1bca96b1d3b9d53&csf=1&web=1&e=eYuShn'
             },
             {
                 title: 'Healthcare Efficient Care',
                 summary: 'A national healthcare provider optimized patient triage, reducing wait times for critical inquiries.',
-                result: '30% Faster Triage'
+                result: '30% Faster Triage',
+                url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-REC-097-2024-10-16.pptx?d=w9eedf83c09694edebd95a2b26bdd5538&csf=1&web=1&e=qoEPDL'
             }
         ]
     },
@@ -111,7 +114,7 @@ const Partners: React.FC = () => {
                                         />
                                     </div>
                                     {partner.tagline && (
-                                        <p className={`text-[10px] text-center w-full px-2 leading-relaxed transition-opacity duration-300 ${isInteractive ? 'text-gray-500 group-hover:text-gray-800' : 'text-gray-400'}`}>
+                                        <p className={`text-xs text-center w-full px-2 leading-relaxed transition-opacity duration-300 ${isInteractive ? 'text-gray-500 group-hover:text-gray-800' : 'text-gray-400'}`}>
                                             {partner.tagline}
                                         </p>
                                     )}

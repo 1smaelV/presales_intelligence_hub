@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, X, ZoomIn, ExternalLink, Monitor } from 'lucide-react';
 
 interface UseCase {
     title: string;
@@ -11,6 +11,7 @@ interface CaseStudy {
     title: string;
     summary: string;
     result: string;
+    url?: string;
 }
 
 export interface PartnerData {
@@ -223,6 +224,17 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                 </div>
                             </div>
 
+                            <div className="flex justify-center my-3">
+                                <div className="flex items-center gap-3 px-4 py-1.5 bg-white/80 backdrop-blur-sm border border-gray-200/60 shadow-sm rounded-full transition-all hover:shadow-md hover:border-primary-200 cursor-default group/counter">
+                                    <Monitor className="w-3.5 h-3.5 text-gray-400 group-hover/counter:text-primary-400 transition-colors" />
+                                    <div key={currentSlide} className="flex items-center gap-1 text-sm font-bold animate-in slide-in-from-bottom-2 fade-in duration-300">
+                                        <span className="text-primary-600">{currentSlide + 1}</span>
+                                        <span className="text-gray-300 font-light mx-0.5">/</span>
+                                        <span className="text-gray-500">{partner.useCases.length}</span>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="flex items-center gap-2 mt-4">
                                 <button
                                     onClick={prevCard}
@@ -272,19 +284,42 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
 
                     {activeTab === 'caseStudies' && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in duration-300">
-                            {partner.caseStudies.map((study, idx) => (
-                                <div key={idx} className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                                    <div className="flex gap-2 mb-3">
-                                        <span className="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-md">Success Story</span>
+                            {partner.caseStudies.map((study, idx) => {
+                                const CardContent = () => (
+                                    <>
+                                        <div className="flex justify-between items-start mb-3">
+                                            <span className="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-md">Success Story</span>
+                                            {study.url && <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-primary-600 transition-colors" />}
+                                        </div>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-700 transition-colors">{study.title}</h3>
+                                        <p className="text-gray-600 text-sm mb-4">{study.summary}</p>
+                                        <div className="pt-4 border-t border-gray-50">
+                                            <p className="text-sm font-medium text-gray-900">Key Result:</p>
+                                            <p className="text-primary-600 font-bold">{study.result}</p>
+                                        </div>
+                                    </>
+                                );
+
+                                if (study.url) {
+                                    return (
+                                        <a
+                                            key={idx}
+                                            href={study.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all group block"
+                                        >
+                                            <CardContent />
+                                        </a>
+                                    );
+                                }
+
+                                return (
+                                    <div key={idx} className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
+                                        <CardContent />
                                     </div>
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2">{study.title}</h3>
-                                    <p className="text-gray-600 text-sm mb-4">{study.summary}</p>
-                                    <div className="pt-4 border-t border-gray-50">
-                                        <p className="text-sm font-medium text-gray-900">Key Result:</p>
-                                        <p className="text-primary-600 font-bold">{study.result}</p>
-                                    </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     )}
                 </div>
