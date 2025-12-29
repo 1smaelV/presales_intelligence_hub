@@ -53,10 +53,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                     <div className="flex flex-col">
                         <label className="text-xs font-semibold text-gray-600 mb-1">Industry</label>
                         <select
-                            className={`min-w-[200px] border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 ${selectionLocked ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+                            className={`min-w-[200px] border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 ${selectionLocked && industry !== '' ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                             value={industry}
                             onChange={(e) => setIndustry(e.target.value)}
-                            disabled={selectionLocked}
+                            disabled={selectionLocked && industry !== ''}
                         >
                             <option value="">Select industry...</option>
                             {industries.map(ind => (
@@ -67,10 +67,10 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                     <div className="flex flex-col">
                         <label className="text-xs font-semibold text-gray-600 mb-1">Offering</label>
                         <select
-                            className={`min-w-[220px] border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 ${selectionLocked ? 'bg-gray-100 cursor-not-allowed' : ''}`}
+                            className={`min-w-[220px] border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 ${selectionLocked && offering !== '' ? 'bg-gray-100 cursor-not-allowed' : ''}`}
                             value={offering}
                             onChange={(e) => setOffering(e.target.value)}
-                            disabled={selectionLocked}
+                            disabled={selectionLocked && offering !== ''}
                         >
                             {offerings.map(opt => (
                                 <option key={opt} value={opt === 'Select Offering...' ? '' : opt}>
