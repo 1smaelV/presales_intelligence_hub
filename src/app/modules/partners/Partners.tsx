@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PartnerDetail, { PartnerData } from './PartnerDetail';
 import useCase1 from '../../assets/use_case/Gemini_Generated_Image_3729o13729o13729.png';
-import useCase2 from '../../assets/use_case/Gemini_Generated_Image_9wsu5n9wsu5n9wsu.png';
-import useCase3 from '../../assets/use_case/Gemini_Generated_Image_au4kziau4kziau4k.png';
+import useCase2 from '../../assets/use_case/Gemini_Generated_Image_cw9sctcw9sctcw9s.png';
+import useCase3 from '../../assets/use_case/Gemini_Generated_Image_p8qfhhp8qfhhp8qf.png';
 import useCase4 from '../../assets/use_case/Gemini_Generated_Image_cgb4nwcgb4nwcgb4.png';
 
 const partnersData: PartnerData[] = [
