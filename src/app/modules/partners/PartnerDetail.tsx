@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, X, ZoomIn, ExternalLink, Monitor } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, X, ZoomIn, ExternalLink, Monitor, Bot, Building2, FileText, Info } from 'lucide-react';
 
 interface UseCase {
     title: string;
@@ -22,6 +22,11 @@ export interface PartnerData {
     useCases: UseCase[];
     caseStudies: CaseStudy[];
     tagline?: string;
+    stats?: {
+        useCases: number;
+        agents: number;
+        industries: number;
+    };
 }
 
 interface PartnerDetailProps {
@@ -33,30 +38,34 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
     const [activeTab, setActiveTab] = useState<'useCases' | 'caseStudies'>('useCases');
     const [currentSlide, setCurrentSlide] = useState(0);
     const [viewImage, setViewImage] = useState<string | null>(null);
-    const [cardStartIndex, setCardStartIndex] = useState(0);
+    const [showInfo, setShowInfo] = useState(false);
 
-    const nextCard = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setCardStartIndex((prev) => (prev + 1) % partner.useCases.length);
-    };
+    // Get the currently viewed use case details
+    const activeImageUseCase = viewImage ? partner.useCases.find(uc => uc.imageUrl === viewImage) : null;
+    // const [cardStartIndex, setCardStartIndex] = useState(0);
 
-    const prevCard = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setCardStartIndex((prev) => (prev - 1 + partner.useCases.length) % partner.useCases.length);
-    };
+    // const nextCard = (e: React.MouseEvent) => {
+    //     e.stopPropagation();
+    //     setCardStartIndex((prev) => (prev + 1) % partner.useCases.length);
+    // };
+
+    // const prevCard = (e: React.MouseEvent) => {
+    //     e.stopPropagation();
+    //     setCardStartIndex((prev) => (prev - 1 + partner.useCases.length) % partner.useCases.length);
+    // };
 
     const nextSlide = (e: React.MouseEvent) => {
         e.stopPropagation();
         const nextIndex = (currentSlide + 1) % partner.useCases.length;
         setCurrentSlide(nextIndex);
-        setCardStartIndex(nextIndex);
+        // setCardStartIndex(nextIndex);
     };
 
     const prevSlide = (e: React.MouseEvent) => {
         e.stopPropagation();
         const prevIndex = (currentSlide - 1 + partner.useCases.length) % partner.useCases.length;
         setCurrentSlide(prevIndex);
-        setCardStartIndex(prevIndex);
+        // setCardStartIndex(prevIndex);
     };
 
     return (
@@ -116,6 +125,47 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                 <div className="min-h-[200px]">
                     {activeTab === 'useCases' && (
                         <div className="space-y-4 animate-in fade-in duration-300">
+                            {/* Stats Cards */}
+                            <div className="grid grid-cols-3 gap-4 mb-2">
+                                {/* Use Cases - Amber */}
+                                <div className="group bg-white py-2 px-3 rounded-xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                    <div className="absolute top-0 right-0 w-16 h-16 bg-amber-50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-[2.5] transition-transform duration-500 opacity-50" />
+                                    <div className="relative z-10 flex flex-col items-center w-full">
+                                        <div className="bg-amber-50 p-1.5 rounded-lg mb-1 group-hover:bg-amber-600 transition-colors duration-300">
+                                            <FileText className="w-5 h-5 text-amber-600 group-hover:text-white transition-colors duration-300" />
+                                        </div>
+                                        <span className="text-xl font-bold text-gray-900 leading-tight group-hover:text-amber-700 transition-colors">{partner.stats?.useCases ?? partner.useCases.length}</span>
+                                        <span className="text-[10px] text-gray-500 font-medium group-hover:text-amber-600 transition-colors">Use Cases</span>
+                                    </div>
+                                </div>
+
+                                {/* Agents - Purple */}
+                                <div className="group bg-white py-2 px-3 rounded-xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                    <div className="absolute top-0 right-0 w-16 h-16 bg-purple-50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-[2.5] transition-transform duration-500 opacity-50" />
+                                    <div className="relative z-10 flex flex-col items-center w-full">
+                                        <div className="bg-purple-50 p-1.5 rounded-lg mb-1 group-hover:bg-purple-600 transition-colors duration-300">
+                                            <Bot className="w-5 h-5 text-purple-600 group-hover:text-white transition-colors duration-300" />
+                                        </div>
+                                        <span className="text-xl font-bold text-gray-900 leading-tight group-hover:text-purple-700 transition-colors">{partner.stats?.agents ?? 2}</span>
+                                        <span className="text-[10px] text-gray-500 font-medium group-hover:text-purple-600 transition-colors">Agents</span>
+                                    </div>
+                                </div>
+
+                                {/* Industries - Blue */}
+                                <div className="group bg-white py-2 px-3 rounded-xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                    <div className="absolute top-0 right-0 w-16 h-16 bg-blue-50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-[2.5] transition-transform duration-500 opacity-50" />
+                                    <div className="relative z-10 flex flex-col items-center w-full">
+                                        <div className="bg-blue-50 p-1.5 rounded-lg mb-1 group-hover:bg-blue-600 transition-colors duration-300">
+                                            <Building2 className="w-5 h-5 text-blue-600 group-hover:text-white transition-colors duration-300" />
+                                        </div>
+                                        <span className="text-xl font-bold text-gray-900 leading-tight group-hover:text-blue-700 transition-colors">{partner.stats?.industries ?? 1}</span>
+                                        <span className="text-[10px] text-gray-500 font-medium group-hover:text-blue-600 transition-colors">Industries</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* ... (carousel code omitted for brevity as it shouldn't change here, but I must be careful with replace_file_content range. I'll use separate replace calls if needed, but here I can just target the stats block if I narrow the range. The user query implies changes to stats cards AND case study cards. I will do 2 separate edits to be safe or one big block if they are close. They are far apart (lines 118 vs 286). I'll use multi_replace.) */}
+
                             <div className="relative bg-gray-100/50 rounded-xl overflow-hidden aspect-video md:aspect-[4/1] group">
                                 {/* Carousel Track */}
                                 <div
@@ -136,7 +186,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                                 if (index !== currentSlide) {
                                                     e.stopPropagation();
                                                     setCurrentSlide(index);
-                                                    setCardStartIndex(index);
+                                                    // setCardStartIndex(index);
                                                 }
                                             }}
                                         >
@@ -213,7 +263,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 setCurrentSlide(idx);
-                                                setCardStartIndex(idx);
+                                                // setCardStartIndex(idx);
                                             }}
                                             className={`
                                                 h-1.5 rounded-full transition-all duration-300 
@@ -235,13 +285,13 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-2 mt-4">
+                            {/* Hidden Navigation Cards */}
+                            {/* <div className="flex items-center gap-2 mt-4">
                                 <button
                                     onClick={prevCard}
                                     className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors flex-shrink-0"
                                 >
                                     <ChevronLeft className="w-5 h-5" />
-                                </button>
 
                                 <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3">
                                     {[0, 1, 2].map((offset) => {
@@ -278,7 +328,7 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                 >
                                     <ChevronRight className="w-5 h-5" />
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                     )}
 
@@ -288,7 +338,12 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                 const CardContent = () => (
                                     <>
                                         <div className="flex justify-between items-start mb-3">
-                                            <span className="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-md">Success Story</span>
+                                            <div className="flex items-center gap-2">
+                                                <div className="p-1.5 bg-primary-50 rounded-lg group-hover:bg-primary-100 transition-colors">
+                                                    <FileText className="w-4 h-4 text-primary-600" />
+                                                </div>
+                                                <span className="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-md transform transition-all duration-300 hover:scale-105 hover:shadow-sm cursor-default">Success Story</span>
+                                            </div>
                                             {study.url && <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-primary-600 transition-colors" />}
                                         </div>
                                         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-700 transition-colors">{study.title}</h3>
@@ -328,21 +383,66 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
             {/* Image Modal */}
             {viewImage && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200"
-                    onClick={() => setViewImage(null)}
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+                    onClick={() => {
+                        setViewImage(null);
+                        setShowInfo(false);
+                    }}
                 >
                     <button
-                        onClick={() => setViewImage(null)}
-                        className="absolute top-4 right-4 p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                        onClick={() => {
+                            setViewImage(null);
+                            setShowInfo(false);
+                        }}
+                        className="absolute top-4 right-4 p-2 bg-white/35 border border-white/30 text-red-300 hover:bg-red-600 hover:border-red-600 hover:text-white rounded-full transition-all z-50 backdrop-blur-md shadow-sm"
                     >
                         <X className="w-8 h-8" />
                     </button>
-                    <img
-                        src={viewImage}
-                        alt="Full view"
-                        className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-200"
-                        onClick={(e) => e.stopPropagation()}
-                    />
+
+                    <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
+                        <img
+                            src={viewImage}
+                            alt="Full view"
+                            className="max-h-[85vh] max-w-[95vw] object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-200 pointer-events-auto cursor-default"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+
+                        {/* Info Button & Card Container */}
+                        <div className="absolute bottom-4 left-0 right-0 flex flex-col items-center justify-end pointer-events-none px-4">
+
+                            {/* Description Card */}
+                            {showInfo && activeImageUseCase && (
+                                <div
+                                    className="mb-4 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl max-w-2xl w-full mx-auto pointer-events-auto animate-in slide-in-from-bottom-5 duration-300 border border-white/20"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <h3 className="text-xl font-bold text-gray-900 mb-2">{activeImageUseCase.title}</h3>
+                                    <p className="text-gray-700 leading-relaxed">{activeImageUseCase.description}</p>
+                                </div>
+                            )}
+
+                            {/* Info Toggle Button */}
+                            {activeImageUseCase && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setShowInfo(!showInfo);
+                                    }}
+                                    className={`
+                                        pointer-events-auto flex items-center gap-2 px-6 py-3 rounded-full 
+                                        backdrop-blur-md transition-all duration-300 shadow-lg border
+                                        ${showInfo
+                                            ? 'bg-white text-primary-600 border-white/50 hover:bg-gray-50'
+                                            : 'bg-white/35 text-primary-200 border-white/30 hover:bg-primary-600 hover:border-primary-500 hover:text-white'
+                                        }
+                                    `}
+                                >
+                                    <Info className="w-5 h-5" />
+                                    <span className="font-medium">{showInfo ? 'Hide Details' : 'Show Details'}</span>
+                                </button>
+                            )}
+                        </div>
+                    </div>
                 </div>
             )}
         </>

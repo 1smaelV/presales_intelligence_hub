@@ -12,6 +12,11 @@ const partnersData: PartnerData[] = [
         logo: 'https://www.genesys.com/wp-content/themes/genesys-kraken/logo/genesys-com-full-color.svg',
         tagline: 'Market leader in the CCaaS (Contact Center as a Service) space, serving 8,000+ organizations globally.',
         description: 'A software company (founded 1990) that builds contact center and customer experience platforms. Primarily use to manage customer interactions across all channels—phone, chat, email, SMS, social media—from a single platform. Used by mid-to-large enterprises with significant customer service operations: banks, insurers, healthcare systems, retailers, telecoms, government agencies. Typically companies with 500+ agents or complex multi-channel needs.',
+        stats: {
+            useCases: 24,
+            agents: 2,
+            industries: 26
+        },
         useCases: [
             {
                 title: 'Auto-summarization using generative AI',
