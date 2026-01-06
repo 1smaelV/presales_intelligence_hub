@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, X, ZoomIn, ExternalLink, Monitor, Bot, Building2, FileText, Info } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, X, ZoomIn, ExternalLink, Monitor, Bot, Building2, FileText, Info, Phone, Banknote, CheckCircle, User, TrendingUp, Clock, Cpu } from 'lucide-react';
 
 interface UseCase {
     title: string;
@@ -10,7 +10,11 @@ interface UseCase {
 interface CaseStudy {
     title: string;
     summary: string;
-    result: string;
+    result?: string;
+    results?: Array<{
+        icon: 'phone' | 'banknote' | 'check' | 'user' | 'trend' | 'clock' | 'cpu';
+        text: string;
+    }>;
     url?: string;
 }
 
@@ -350,7 +354,35 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                         <p className="text-gray-600 text-sm mb-4">{study.summary}</p>
                                         <div className="pt-4 border-t border-gray-50">
                                             <p className="text-sm font-medium text-gray-900">Key Result:</p>
-                                            <p className="text-primary-600 font-bold">{study.result}</p>
+                                            {study.results && study.results.length > 0 ? (
+                                                <div className="space-y-2 mt-2">
+                                                    {study.results.map((item, resultIdx) => {
+                                                        const Icon = item.icon === 'phone'
+                                                            ? Phone
+                                                            : item.icon === 'banknote'
+                                                                ? Banknote
+                                                                : item.icon === 'user'
+                                                                    ? User
+                                                                    : item.icon === 'trend'
+                                                                        ? TrendingUp
+                                                                        : item.icon === 'clock'
+                                                                            ? Clock
+                                                                            : item.icon === 'cpu'
+                                                                                ? Cpu
+                                                                                : CheckCircle;
+                                                        return (
+                                                            <div key={resultIdx} className="flex items-center gap-2 text-sm text-primary-700 font-semibold">
+                                                                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary-50 text-primary-600">
+                                                                    <Icon className="h-3.5 w-3.5" />
+                                                                </span>
+                                                                <span>{item.text}</span>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            ) : (
+                                                <p className="text-primary-600 font-bold">{study.result}</p>
+                                            )}
                                         </div>
                                     </>
                                 );

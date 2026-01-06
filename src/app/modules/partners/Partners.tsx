@@ -41,21 +41,33 @@ const partnersData: PartnerData[] = [
         ],
         caseStudies: [
             {
-                title: 'Global Bank Transformation',
-                summary: 'A leading global bank reduced average handling time by 25% by implementing Genesys-integrated agent assist tools.',
-                result: '25% Reduction in AHT',
+                title: 'Banking, Financial Services & Insurance | Self-Service AI Bots',
+                summary: 'Revolutionizing Promise to Pay: How a Voice Bot Transformed Collections',
+                results: [
+                    { icon: 'phone', text: '150k additional volume handled' },
+                    { icon: 'banknote', text: '$1M promises to pay generated' },
+                    { icon: 'check', text: '75% of interactions closed' }
+                ],
                 url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-BFS-083-2024-10-10%20Collections.pptx?d=w81bd5f0b76b74269a1bca96b1d3b9d53&csf=1&web=1&e=eYuShn'
             },
             {
-                title: 'Retailer Customer Loyalty',
-                summary: 'Major retailer saw a 15% increase in CSAT scores after deploying personalized routing strategies.',
-                result: '+15% CSAT Score',
-                url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-BFS-083-2024-10-10%20Collections.pptx?d=w81bd5f0b76b74269a1bca96b1d3b9d53&csf=1&web=1&e=eYuShn'
+                title: 'Banking, Financial Services & Insurance | CX Consulting',
+                summary: 'Strategic Innovations Redefining Customer Engagement',
+                results: [
+                    { icon: 'user', text: '100% disclosure compliance' },
+                    { icon: 'banknote', text: '+$1B new revenue for merchant network' },
+                    { icon: 'trend', text: '2 years top performer on US Fraud' }
+                ],
+                url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-BFS-091.pptx?d=wf46615108efa4ae1a503affb42118f7c&csf=1&web=1&e=KAOJzA'
             },
             {
-                title: 'Healthcare Efficient Care',
-                summary: 'A national healthcare provider optimized patient triage, reducing wait times for critical inquiries.',
-                result: '30% Faster Triage',
+                title: 'Retail & eCommerce | CX Consulting',
+                summary: 'Transforming VDI Solutions for Unmatched Resilience',
+                results: [
+                    { icon: 'clock', text: 'Significant reduction in downtime and loss of opportunity caused by system failure' },
+                    { icon: 'banknote', text: '$5M+ cost savings through the life of the contract (5 years)' },
+                    { icon: 'cpu', text: '9 mos from consulting through implementation to completion' }
+                ],
                 url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-REC-097-2024-10-16.pptx?d=w9eedf83c09694edebd95a2b26bdd5538&csf=1&web=1&e=qoEPDL'
             }
         ]
