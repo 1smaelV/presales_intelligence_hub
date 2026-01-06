@@ -41,32 +41,32 @@ const partnersData: PartnerData[] = [
         ],
         caseStudies: [
             {
-                title: 'Banking, Financial Services & Insurance | Self-Service AI Bots',
-                summary: 'Revolutionizing Promise to Pay: How a Voice Bot Transformed Collections',
+                title: 'Revolutionizing Promise to Pay: Voice Bot transformed Collections',
+                summary: 'Collections-specific voice bot that would proactively generate a promise to pay (PTP) from customers by enabling real-time notification and delivery of digital links',
                 results: [
+                    { icon: 'banknote', text: '$1M PTPs generated' },
                     { icon: 'phone', text: '150k additional volume handled' },
-                    { icon: 'banknote', text: '$1M promises to pay generated' },
                     { icon: 'check', text: '75% of interactions closed' }
                 ],
                 url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-BFS-083-2024-10-10%20Collections.pptx?d=w81bd5f0b76b74269a1bca96b1d3b9d53&csf=1&web=1&e=eYuShn'
             },
             {
-                title: 'Banking, Financial Services & Insurance | CX Consulting',
-                summary: 'Strategic Innovations Redefining Customer Engagement',
+                title: 'Strategic Innovations Redefining Customer Engagement',
+                summary: 'Custom-built solution that meets rigorous RBI guidelines supporting a multi-skilled, multi-channel, multilingual dual-site hybrid contact center.',
                 results: [
                     { icon: 'user', text: '100% disclosure compliance' },
-                    { icon: 'banknote', text: '+$1B new revenue for merchant network' },
-                    { icon: 'trend', text: '2 years top performer on US Fraud' }
+                    { icon: 'banknote', text: '$1B+ new revenue for merchant network' },
+                    { icon: 'trend', text: '2 years top performer US Fraud' }
                 ],
                 url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-BFS-091.pptx?d=wf46615108efa4ae1a503affb42118f7c&csf=1&web=1&e=KAOJzA'
             },
             {
-                title: 'Retail & eCommerce | CX Consulting',
-                summary: 'Transforming VDI Solutions for Unmatched Resilience',
+                title: 'Transforming VDI Solutions for Unmatched Resilience',
+                summary: "Thorough assessment of client's environment to identify pain points within its WAH contact center solution. Recommended key WAH and telephony infrastructure improvements and consolidation, including CCaaS, Dual VDI environment and fully staffed help desk support through ServiceNow.",
                 results: [
-                    { icon: 'clock', text: 'Significant reduction in downtime and loss of opportunity caused by system failure' },
-                    { icon: 'banknote', text: '$5M+ cost savings through the life of the contract (5 years)' },
-                    { icon: 'cpu', text: '9 mos from consulting through implementation to completion' }
+                    { icon: 'cpu', text: '9 months project from consulting to completion' },
+                    { icon: 'clock', text: 'Reduction in downtime' },
+                    { icon: 'banknote', text: '$5M+ in cost savings over 5 years' }
                 ],
                 url: 'https://cnxmail.sharepoint.com/:p:/r/sites/msteams_4bd7b9/Shared%20Documents/CCaaS%20Partners/Genesys/Sales%20and%20Marketing/Case%20Studies/CNX-REC-097-2024-10-16.pptx?d=w9eedf83c09694edebd95a2b26bdd5538&csf=1&web=1&e=qoEPDL'
             }

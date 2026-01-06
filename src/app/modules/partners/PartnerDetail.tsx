@@ -343,17 +343,24 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                     <>
                                         <div className="flex justify-between items-start mb-3">
                                             <div className="flex items-center gap-2">
-                                                <div className="p-1.5 bg-primary-50 rounded-lg group-hover:bg-primary-100 transition-colors">
-                                                    <FileText className="w-4 h-4 text-primary-600" />
-                                                </div>
-                                                <span className="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-md transform transition-all duration-300 hover:scale-105 hover:shadow-sm cursor-default">Success Story</span>
+                                                <span className="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-md transform transition-all duration-300 hover:scale-105 hover:shadow-sm cursor-default">
+                                                    {study.title.includes('Banking, Financial Services & Insurance | Self-Service AI Bots') ||
+                                                    study.title.includes('Revolutionizing Promise to Pay: Voice Bot transformed Collections') ||
+                                                    study.title.includes('Banking, Financial Services & Insurance | CX Consulting') ||
+                                                    study.title.includes('Strategic Innovations Redefining Customer Engagement')
+                                                        ? 'BFSI'
+                                                        : study.title.includes('Retail & eCommerce | CX Consulting') ||
+                                                            study.title.includes('Transforming VDI Solutions for Unmatched Resilience')
+                                                            ? 'Retail & eCommerce'
+                                                            : 'Success Story'}
+                                                </span>
                                             </div>
                                             {study.url && <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-primary-600 transition-colors" />}
                                         </div>
                                         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-700 transition-colors">{study.title}</h3>
                                         <p className="text-gray-600 text-sm mb-4">{study.summary}</p>
                                         <div className="pt-4 border-t border-gray-50">
-                                            <p className="text-sm font-medium text-gray-900">Key Result:</p>
+                                            <p className="text-sm font-medium text-gray-900">Outcomes:</p>
                                             {study.results && study.results.length > 0 ? (
                                                 <div className="space-y-2 mt-2">
                                                     {study.results.map((item, resultIdx) => {
