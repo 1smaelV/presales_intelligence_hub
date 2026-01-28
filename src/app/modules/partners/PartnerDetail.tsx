@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, X, ZoomIn, ExternalLink, Monitor, Bot, Building2, FileText, Info, Phone, Banknote, CheckCircle, User, TrendingUp, Clock, Cpu } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, X, ZoomIn, ExternalLink, Monitor, Bot, Building2, FileText, Info, Phone, Banknote, CheckCircle, User, TrendingUp, Clock, Cpu, Sparkles } from 'lucide-react';
+
 
 interface UseCase {
     title: string;
@@ -40,6 +41,7 @@ interface PartnerDetailProps {
 
 const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
     const [activeTab, setActiveTab] = useState<'useCases' | 'caseStudies'>('useCases');
+    const [useCaseSubTab, setUseCaseSubTab] = useState<'concentrix' | 'partner'>('partner');
     const [currentSlide, setCurrentSlide] = useState(0);
     const [viewImage, setViewImage] = useState<string | null>(null);
     const [showInfo, setShowInfo] = useState(false);
@@ -128,211 +130,212 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                 {/* Content Area */}
                 <div className="min-h-[200px]">
                     {activeTab === 'useCases' && (
-                        <div className="space-y-4 animate-in fade-in duration-300">
-                            {/* Stats Cards */}
-                            <div className="grid grid-cols-3 gap-4 mb-2">
-                                {/* Use Cases - Amber */}
-                                <div className="group bg-white py-2 px-3 rounded-xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                                    <div className="absolute top-0 right-0 w-16 h-16 bg-amber-50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-[2.5] transition-transform duration-500 opacity-50" />
-                                    <div className="relative z-10 flex flex-col items-center w-full">
-                                        <div className="bg-amber-50 p-1.5 rounded-lg mb-1 group-hover:bg-amber-600 transition-colors duration-300">
-                                            <FileText className="w-5 h-5 text-amber-600 group-hover:text-white transition-colors duration-300" />
-                                        </div>
-                                        <span className="text-xl font-bold text-gray-900 leading-tight group-hover:text-amber-700 transition-colors">{partner.stats?.useCases ?? partner.useCases.length}</span>
-                                        <span className="text-[10px] text-gray-500 font-medium group-hover:text-amber-600 transition-colors">Use Cases</span>
-                                    </div>
-                                </div>
-
-                                {/* Agents - Purple */}
-                                <div className="group bg-white py-2 px-3 rounded-xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                                    <div className="absolute top-0 right-0 w-16 h-16 bg-purple-50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-[2.5] transition-transform duration-500 opacity-50" />
-                                    <div className="relative z-10 flex flex-col items-center w-full">
-                                        <div className="bg-purple-50 p-1.5 rounded-lg mb-1 group-hover:bg-purple-600 transition-colors duration-300">
-                                            <Bot className="w-5 h-5 text-purple-600 group-hover:text-white transition-colors duration-300" />
-                                        </div>
-                                        <span className="text-xl font-bold text-gray-900 leading-tight group-hover:text-purple-700 transition-colors">{partner.stats?.agents ?? 2}</span>
-                                        <span className="text-[10px] text-gray-500 font-medium group-hover:text-purple-600 transition-colors">Agents</span>
-                                    </div>
-                                </div>
-
-                                {/* Industries - Blue */}
-                                <div className="group bg-white py-2 px-3 rounded-xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                                    <div className="absolute top-0 right-0 w-16 h-16 bg-blue-50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-[2.5] transition-transform duration-500 opacity-50" />
-                                    <div className="relative z-10 flex flex-col items-center w-full">
-                                        <div className="bg-blue-50 p-1.5 rounded-lg mb-1 group-hover:bg-blue-600 transition-colors duration-300">
-                                            <Building2 className="w-5 h-5 text-blue-600 group-hover:text-white transition-colors duration-300" />
-                                        </div>
-                                        <span className="text-xl font-bold text-gray-900 leading-tight group-hover:text-blue-700 transition-colors">{partner.stats?.industries ?? 1}</span>
-                                        <span className="text-[10px] text-gray-500 font-medium group-hover:text-blue-600 transition-colors">Industries</span>
-                                    </div>
-                                </div>
+                        <div className="space-y-6 animate-in fade-in duration-300">
+                            {/* Nested Tabs */}
+                            <div className="flex gap-6 border-b border-gray-100 mb-6 mt-2 ml-1">
+                                <button
+                                    onClick={() => setUseCaseSubTab('concentrix')}
+                                    className={`pb-2 text-sm font-medium transition-colors relative ${useCaseSubTab === 'concentrix'
+                                            ? 'text-indigo-600'
+                                            : 'text-gray-400 hover:text-gray-600'
+                                        }`}
+                                >
+                                    Concentrix
+                                    {useCaseSubTab === 'concentrix' && (
+                                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 rounded-t-full" />
+                                    )}
+                                </button>
+                                <button
+                                    onClick={() => setUseCaseSubTab('partner')}
+                                    className={`pb-2 text-sm font-medium transition-colors relative ${useCaseSubTab === 'partner'
+                                            ? 'text-indigo-600'
+                                            : 'text-gray-400 hover:text-gray-600'
+                                        }`}
+                                >
+                                    Partner
+                                    {useCaseSubTab === 'partner' && (
+                                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 rounded-t-full" />
+                                    )}
+                                </button>
                             </div>
 
-                            {/* ... (carousel code omitted for brevity as it shouldn't change here, but I must be careful with replace_file_content range. I'll use separate replace calls if needed, but here I can just target the stats block if I narrow the range. The user query implies changes to stats cards AND case study cards. I will do 2 separate edits to be safe or one big block if they are close. They are far apart (lines 118 vs 286). I'll use multi_replace.) */}
+                            {/* Concentrix Content */}
+                            {useCaseSubTab === 'concentrix' && (
+                                <div className="flex flex-col items-center justify-center py-16 text-center space-y-4 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
+                                    <div className="bg-primary-50 p-4 rounded-full">
+                                        <Sparkles className="w-8 h-8 text-primary-600" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-semibold text-gray-900">Concentrix Accelerators</h3>
+                                        <p className="text-gray-500 max-w-sm mx-auto mt-1">
+                                            Proprietary IP and solution accelerators coming soon to this section.
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
 
-                            <div className="relative bg-gray-100/50 rounded-xl overflow-hidden aspect-video md:aspect-[4/1] group">
-                                {/* Carousel Track */}
-                                <div
-                                    className="absolute top-0 bottom-0 left-0 right-0 flex items-center transition-transform duration-500 ease-out will-change-transform"
-                                    style={{ transform: `translateX(${15 - (currentSlide * 70)}%)` }}
-                                >
-                                    {partner.useCases.map((useCase, index) => (
-                                        <div
-                                            key={index}
-                                            className={`
-                                                w-[70%] h-[90%] flex-shrink-0 px-3 transition-all duration-500 ease-out
-                                                ${index === currentSlide
-                                                    ? 'opacity-100 scale-100 z-10'
-                                                    : 'opacity-40 scale-90 hover:opacity-60 cursor-pointer z-0 grayscale-[0.3]'
-                                                }
-                                            `}
-                                            onClick={(e) => {
-                                                if (index !== currentSlide) {
-                                                    e.stopPropagation();
-                                                    setCurrentSlide(index);
-                                                    // setCardStartIndex(index);
-                                                }
-                                            }}
-                                        >
-                                            <div
-                                                className={`
-                                                    relative w-full h-full rounded-xl overflow-hidden shadow-2xl bg-black group/image
-                                                    ${index === currentSlide ? 'cursor-zoom-in ring-1 ring-white/20' : ''}
-                                                `}
-                                                onClick={() => index === currentSlide && setViewImage(useCase.imageUrl)}
-                                            >
-                                                <img
-                                                    src={useCase.imageUrl}
-                                                    alt={useCase.title}
-                                                    className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover/image:scale-105"
-                                                />
-
-                                                {/* Text Overlay - Only active */}
-                                                <div
-                                                    className={`
-                                                        absolute inset-0 flex flex-col justify-end p-4 pointer-events-none transition-opacity duration-500 delay-100
-                                                        ${index === currentSlide ? 'opacity-100 group-hover/image:opacity-0' : 'opacity-0'}
-                                                    `}
-                                                >
-                                                    <div
-                                                        className="backdrop-blur-md border-l-4 border-primary-500 p-3 rounded-r-lg max-w-md shadow-lg transform translate-y-0 transition-transform duration-500"
-                                                        style={{ backgroundColor: 'rgba(0, 95, 107, 0.5)' }}
-                                                    >
-                                                        <h3 className="text-lg font-bold mb-0.5 text-white">{useCase.title}</h3>
-                                                        <p className="text-white/90 text-xs leading-relaxed">{useCase.description}</p>
-                                                    </div>
+                            {/* Partner Content */}
+                            {useCaseSubTab === 'partner' && (
+                                <div className="space-y-4 animate-in fade-in duration-300">
+                                    {/* Stats Cards */}
+                                    <div className="grid grid-cols-3 gap-4 mb-2">
+                                        {/* Use Cases - Amber */}
+                                        <div className="group bg-white py-2 px-3 rounded-xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                            <div className="absolute top-0 right-0 w-16 h-16 bg-amber-50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-[2.5] transition-transform duration-500 opacity-50" />
+                                            <div className="relative z-10 flex flex-col items-center w-full">
+                                                <div className="bg-amber-50 p-1.5 rounded-lg mb-1 group-hover:bg-amber-600 transition-colors duration-300">
+                                                    <FileText className="w-5 h-5 text-amber-600 group-hover:text-white transition-colors duration-300" />
                                                 </div>
-
-                                                {/* Zoom Cue Overlay - Only active */}
-                                                {index === currentSlide && (
-                                                    <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 bg-black/20 pointer-events-none">
-                                                        <div
-                                                            className="backdrop-blur-sm p-3 rounded-full mb-2 shadow-lg"
-                                                            style={{ backgroundColor: '#005f6b' }}
-                                                        >
-                                                            <ZoomIn className="w-8 h-8 text-white" />
-                                                        </div>
-                                                        <span
-                                                            className="text-white font-medium text-sm tracking-wide drop-shadow-md px-3 py-1 rounded-full backdrop-blur-sm shadow-sm"
-                                                            style={{ backgroundColor: 'rgba(0, 95, 107, 0.9)' }}
-                                                        >
-                                                            Click to Zoom
-                                                        </span>
-                                                    </div>
-                                                )}
+                                                <span className="text-xl font-bold text-gray-900 leading-tight group-hover:text-amber-700 transition-colors">{partner.stats?.useCases ?? partner.useCases.length}</span>
+                                                <span className="text-[10px] text-gray-500 font-medium group-hover:text-amber-600 transition-colors">Use Cases</span>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
 
-                                {/* Controls */}
-                                <button
-                                    onClick={prevSlide}
-                                    className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-[#005f6b]/80 hover:bg-[#005f6b] backdrop-blur-md rounded-full text-white transition-all hover:scale-110 active:scale-95 shadow-lg border border-white/10 z-20 group-hover:bg-[#005f6b]"
-                                >
-                                    <ChevronLeft className="w-6 h-6 animate-pulse" />
-                                </button>
-                                <button
-                                    onClick={nextSlide}
-                                    className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-[#005f6b]/80 hover:bg-[#005f6b] backdrop-blur-md rounded-full text-white transition-all hover:scale-110 active:scale-95 shadow-lg border border-white/10 z-20 group-hover:bg-[#005f6b]"
-                                >
-                                    <ChevronRight className="w-6 h-6 animate-pulse" />
-                                </button>
+                                        {/* Agents - Purple */}
+                                        <div className="group bg-white py-2 px-3 rounded-xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                            <div className="absolute top-0 right-0 w-16 h-16 bg-purple-50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-[2.5] transition-transform duration-500 opacity-50" />
+                                            <div className="relative z-10 flex flex-col items-center w-full">
+                                                <div className="bg-purple-50 p-1.5 rounded-lg mb-1 group-hover:bg-purple-600 transition-colors duration-300">
+                                                    <Bot className="w-5 h-5 text-purple-600 group-hover:text-white transition-colors duration-300" />
+                                                </div>
+                                                <span className="text-xl font-bold text-gray-900 leading-tight group-hover:text-purple-700 transition-colors">{partner.stats?.agents ?? 2}</span>
+                                                <span className="text-[10px] text-gray-500 font-medium group-hover:text-purple-600 transition-colors">Agents</span>
+                                            </div>
+                                        </div>
 
-                                {/* Indicators */}
-                                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-                                    {partner.useCases.map((_, idx) => (
+                                        {/* Industries - Blue */}
+                                        <div className="group bg-white py-2 px-3 rounded-xl border border-gray-100 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                            <div className="absolute top-0 right-0 w-16 h-16 bg-blue-50 rounded-full translate-x-8 -translate-y-8 group-hover:scale-[2.5] transition-transform duration-500 opacity-50" />
+                                            <div className="relative z-10 flex flex-col items-center w-full">
+                                                <div className="bg-blue-50 p-1.5 rounded-lg mb-1 group-hover:bg-blue-600 transition-colors duration-300">
+                                                    <Building2 className="w-5 h-5 text-blue-600 group-hover:text-white transition-colors duration-300" />
+                                                </div>
+                                                <span className="text-xl font-bold text-gray-900 leading-tight group-hover:text-blue-700 transition-colors">{partner.stats?.industries ?? 1}</span>
+                                                <span className="text-[10px] text-gray-500 font-medium group-hover:text-blue-600 transition-colors">Industries</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="relative bg-gray-100/50 rounded-xl overflow-hidden aspect-video md:aspect-[4/1] group">
+                                        {/* Carousel Track */}
+                                        <div
+                                            className="absolute top-0 bottom-0 left-0 right-0 flex items-center transition-transform duration-500 ease-out will-change-transform"
+                                            style={{ transform: `translateX(${15 - (currentSlide * 70)}%)` }}
+                                        >
+                                            {partner.useCases.map((useCase, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={`
+                                                                        w-[70%] h-[90%] flex-shrink-0 px-3 transition-all duration-500 ease-out
+                                                                        ${index === currentSlide
+                                                            ? 'opacity-100 scale-100 z-10'
+                                                            : 'opacity-40 scale-90 hover:opacity-60 cursor-pointer z-0 grayscale-[0.3]'
+                                                        }
+                                                                    `}
+                                                    onClick={(e) => {
+                                                        if (index !== currentSlide) {
+                                                            e.stopPropagation();
+                                                            setCurrentSlide(index);
+                                                            // setCardStartIndex(index);
+                                                        }
+                                                    }}
+                                                >
+                                                    <div
+                                                        className={`
+                                                                            relative w-full h-full rounded-xl overflow-hidden shadow-2xl bg-black group/image
+                                                                            ${index === currentSlide ? 'cursor-zoom-in ring-1 ring-white/20' : ''}
+                                                                        `}
+                                                        onClick={() => index === currentSlide && setViewImage(useCase.imageUrl)}
+                                                    >
+                                                        <img
+                                                            src={useCase.imageUrl}
+                                                            alt={useCase.title}
+                                                            className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover/image:scale-105"
+                                                        />
+
+                                                        {/* Text Overlay - Only active */}
+                                                        <div
+                                                            className={`
+                                                                                absolute inset-0 flex flex-col justify-end p-4 pointer-events-none transition-opacity duration-500 delay-100
+                                                                                ${index === currentSlide ? 'opacity-100 group-hover/image:opacity-0' : 'opacity-0'}
+                                                                            `}
+                                                        >
+                                                            <div
+                                                                className="backdrop-blur-md border-l-4 border-primary-500 p-3 rounded-r-lg max-w-md shadow-lg transform translate-y-0 transition-transform duration-500"
+                                                                style={{ backgroundColor: 'rgba(0, 95, 107, 0.5)' }}
+                                                            >
+                                                                <h3 className="text-lg font-bold mb-0.5 text-white">{useCase.title}</h3>
+                                                                <p className="text-white/90 text-xs leading-relaxed">{useCase.description}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Zoom Cue Overlay - Only active */}
+                                                        {index === currentSlide && (
+                                                            <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 bg-black/20 pointer-events-none">
+                                                                <div
+                                                                    className="backdrop-blur-sm p-3 rounded-full mb-2 shadow-lg"
+                                                                    style={{ backgroundColor: '#005f6b' }}
+                                                                >
+                                                                    <ZoomIn className="w-8 h-8 text-white" />
+                                                                </div>
+                                                                <span
+                                                                    className="text-white font-medium text-sm tracking-wide drop-shadow-md px-3 py-1 rounded-full backdrop-blur-sm shadow-sm"
+                                                                    style={{ backgroundColor: 'rgba(0, 95, 107, 0.9)' }}
+                                                                >
+                                                                    Click to Zoom
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Controls */}
                                         <button
-                                            key={idx}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setCurrentSlide(idx);
-                                                // setCardStartIndex(idx);
-                                            }}
-                                            className={`
-                                                h-1.5 rounded-full transition-all duration-300 
-                                                ${currentSlide === idx ? 'bg-white w-8 shadow-glow' : 'bg-white/40 w-2 hover:bg-white/70'}
-                                            `}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
+                                            onClick={prevSlide}
+                                            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-[#005f6b]/80 hover:bg-[#005f6b] backdrop-blur-md rounded-full text-white transition-all hover:scale-110 active:scale-95 shadow-lg border border-white/10 z-20 group-hover:bg-[#005f6b]"
+                                        >
+                                            <ChevronLeft className="w-6 h-6 animate-pulse" />
+                                        </button>
+                                        <button
+                                            onClick={nextSlide}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-[#005f6b]/80 hover:bg-[#005f6b] backdrop-blur-md rounded-full text-white transition-all hover:scale-110 active:scale-110 active:scale-95 shadow-lg border border-white/10 z-20 group-hover:bg-[#005f6b]"
+                                        >
+                                            <ChevronRight className="w-6 h-6 animate-pulse" />
+                                        </button>
 
-                            <div className="flex justify-center my-3">
-                                <div className="flex items-center gap-3 px-4 py-1.5 bg-white/80 backdrop-blur-sm border border-gray-200/60 shadow-sm rounded-full transition-all hover:shadow-md hover:border-primary-200 cursor-default group/counter">
-                                    <Monitor className="w-3.5 h-3.5 text-gray-400 group-hover/counter:text-primary-400 transition-colors" />
-                                    <div key={currentSlide} className="flex items-center gap-1 text-sm font-bold animate-in slide-in-from-bottom-2 fade-in duration-300">
-                                        <span className="text-primary-600">{currentSlide + 1}</span>
-                                        <span className="text-gray-300 font-light mx-0.5">/</span>
-                                        <span className="text-gray-500">{partner.useCases.length}</span>
+                                        {/* Indicators */}
+                                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                                            {partner.useCases.map((_, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setCurrentSlide(idx);
+                                                        // setCardStartIndex(idx);
+                                                    }}
+                                                    className={`
+                                                                        h-1.5 rounded-full transition-all duration-300 
+                                                                        ${currentSlide === idx ? 'bg-white w-8 shadow-glow' : 'bg-white/40 w-2 hover:bg-white/70'}
+                                                                    `}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-center my-3">
+                                        <div className="flex items-center gap-3 px-4 py-1.5 bg-white/80 backdrop-blur-sm border border-gray-200/60 shadow-sm rounded-full transition-all hover:shadow-md hover:border-primary-200 cursor-default group/counter">
+                                            <Monitor className="w-3.5 h-3.5 text-gray-400 group-hover/counter:text-primary-400 transition-colors" />
+                                            <div key={currentSlide} className="flex items-center gap-1 text-sm font-bold animate-in slide-in-from-bottom-2 fade-in duration-300">
+                                                <span className="text-primary-600">{currentSlide + 1}</span>
+                                                <span className="text-gray-300 font-light mx-0.5">/</span>
+                                                <span className="text-gray-500">{partner.useCases.length}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* Hidden Navigation Cards */}
-                            {/* <div className="flex items-center gap-2 mt-4">
-                                <button
-                                    onClick={prevCard}
-                                    className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors flex-shrink-0"
-                                >
-                                    <ChevronLeft className="w-5 h-5" />
-
-                                <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3">
-                                    {[0, 1, 2].map((offset) => {
-                                        const idx = (cardStartIndex + offset) % partner.useCases.length;
-                                        const useCase = partner.useCases[idx];
-                                        return (
-                                            <button
-                                                key={`${idx}-${offset}`}
-                                                onClick={() => {
-                                                    if (currentSlide === idx) {
-                                                        setViewImage(useCase.imageUrl);
-                                                    } else {
-                                                        setCurrentSlide(idx);
-                                                        setCardStartIndex(idx);
-                                                    }
-                                                }}
-                                                className={`text-left p-4 rounded-xl border transition-all h-full ${currentSlide === idx
-                                                    ? 'bg-primary-50 border-primary-200 ring-1 ring-primary-100'
-                                                    : 'bg-white border-gray-100 hover:border-gray-300'
-                                                    }`}
-                                            >
-                                                <h4 className={`font-semibold mb-1 ${currentSlide === idx ? 'text-primary-900' : 'text-gray-900'}`}>
-                                                    {useCase.title}
-                                                </h4>
-                                                <p className="text-xs text-gray-500 line-clamp-2">{useCase.description}</p>
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-
-                                <button
-                                    onClick={nextCard}
-                                    className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors flex-shrink-0"
-                                >
-                                    <ChevronRight className="w-5 h-5" />
-                                </button>
-                            </div> */}
+                            )}
                         </div>
                     )}
 
@@ -345,9 +348,9 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                                             <div className="flex items-center gap-2">
                                                 <span className="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-md transform transition-all duration-300 hover:scale-105 hover:shadow-sm cursor-default">
                                                     {study.title.includes('Banking, Financial Services & Insurance | Self-Service AI Bots') ||
-                                                    study.title.includes('Revolutionizing Promise to Pay: Voice Bot transformed Collections') ||
-                                                    study.title.includes('Banking, Financial Services & Insurance | CX Consulting') ||
-                                                    study.title.includes('Strategic Innovations Redefining Customer Engagement')
+                                                        study.title.includes('Revolutionizing Promise to Pay: Voice Bot transformed Collections') ||
+                                                        study.title.includes('Banking, Financial Services & Insurance | CX Consulting') ||
+                                                        study.title.includes('Strategic Innovations Redefining Customer Engagement')
                                                         ? 'BFSI'
                                                         : study.title.includes('Retail & eCommerce | CX Consulting') ||
                                                             study.title.includes('Transforming VDI Solutions for Unmatched Resilience')
@@ -483,7 +486,8 @@ const PartnerDetail: React.FC<PartnerDetailProps> = ({ partner, onBack }) => {
                         </div>
                     </div>
                 </div>
-            )}
+            )
+            }
         </>
     );
 };

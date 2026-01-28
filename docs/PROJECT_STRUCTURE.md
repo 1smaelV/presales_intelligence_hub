@@ -84,3 +84,9 @@ Presales Intelligence Hub
 3. **Long term**: Introduce orchestrated AI agents for proactive brief generation, ensuring they log outputs and can be monitored from the agent console.
 
 This structure keeps experimentation agile while laying the groundwork for enterprise-scale AI features. Use it as a reference when creating new modules or planning roadmap milestones.
+
+
+--n8n start
+--npm run dev
+--npm run build
+--npm test

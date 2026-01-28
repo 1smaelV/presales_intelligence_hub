@@ -36,8 +36,28 @@ const industryOptions = [
   'Other',
 ];
 
+// Helper to get section from URL
+const getSectionFromUrl = () => {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('section') || 'dashboard';
+};
+
+const requiresIndustry = (sectionId: string) =>
+  sectionId !== 'prospect-analyzer' &&
+  sectionId !== 'dashboard' &&
+  sectionId !== 'development-framework' &&
+  !sectionId.startsWith('partners');
+
 const PresalesHub = () => {
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const [activeSection, setActiveSection] = useState(() => {
+    const initialSection = getSectionFromUrl();
+    // If the initial section requires industry but we don't have one selected yet (initial load),
+    // default to 'dashboard' to force the selection flow via modal.
+    if (requiresIndustry(initialSection)) {
+      return 'dashboard';
+    }
+    return initialSection;
+  });
   const [globalIndustry, setGlobalIndustry] = useState<string>('');
   const [globalOffering, setGlobalOffering] = useState<string>('');
   const [briefData, setBriefData] = useState<BriefData>({
@@ -66,13 +86,15 @@ const PresalesHub = () => {
     { id: 'key-questions', name: 'Key Questions', icon: MessageSquare, active: true },
     { id: 'prospect-analyzer', name: 'Customer Intelligence', icon: LineChart, active: true, external: true, href: 'https://prospect-analyzer.onrender.com/dashboard' },
     { id: 'talking-points', name: 'Talking Points', icon: BookOpen, active: true },
-    { id: 'platforms', name: 'Partners', icon: Handshake, active: true },
+    { id: 'partners', name: 'Partners', icon: Handshake, active: true },
     { id: 'team-skills', name: 'Team Capabilities', icon: Users, active: false },
     { id: 'training', name: 'Training Plans', icon: GraduationCap, active: false },
   ];
 
   const renderContent = () => {
-    switch (activeSection) {
+    const baseSection = activeSection.split('/')[0];
+
+    switch (baseSection) {
       case 'dashboard':
         return (
           <Dashboard
@@ -111,8 +133,8 @@ const PresalesHub = () => {
         return <TalkingPoints />;
       case 'concepts':
         return <ComingSoon title="Agentic AI Concept Library" description="Comprehensive definitions and explanations" />;
-      case 'platforms':
-        return <Partners />;
+      case 'partners':
+        return <Partners route={activeSection} />;
       case 'team-skills':
         return <ComingSoon title="Team Capabilities" description="Skills and expertise overview" />;
       case 'training':
@@ -143,10 +165,29 @@ const PresalesHub = () => {
     }
   }, [activeSection]);
 
-  const requiresIndustry = (sectionId: string) => sectionId !== 'prospect-analyzer' && sectionId !== 'dashboard' && sectionId !== 'development-framework' && sectionId !== 'platforms';
+  // Initial Guard Check
+  useEffect(() => {
+    const initialSection = getSectionFromUrl();
+    if (requiresIndustry(initialSection)) { // We check URL again
+      setPendingSection(initialSection);
+      setShowGuardModal(true);
+      // activeSection is already defaults to dashboard by lazy init above
+    }
+  }, []); // Run only once on mount
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const section = getSectionFromUrl();
+      setActiveSection(section);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const lockSelections = (sectionId?: string) => {
-    if (sectionId === 'prospect-analyzer' || sectionId === 'dashboard' || sectionId === 'platforms') return;
+    if (sectionId === 'prospect-analyzer' || sectionId === 'dashboard' || sectionId === 'partners') return;
     if (!globalIndustry) return;
     setIsSelectionLocked(true);
   };
@@ -160,6 +201,13 @@ const PresalesHub = () => {
       return;
     }
     setActiveSection(sectionId);
+
+    // Update URL without reloading
+    const newUrl = sectionId === 'dashboard'
+      ? window.location.pathname
+      : `${window.location.pathname}?section=${sectionId}`;
+    window.history.pushState({}, '', newUrl);
+
     lockSelections(sectionId);
   };
 
@@ -170,6 +218,13 @@ const PresalesHub = () => {
     setShowGuardModal(false);
     if (pendingSection) {
       setActiveSection(pendingSection);
+
+      // Update URL without reloading for pending section
+      const newUrl = pendingSection === 'dashboard'
+        ? window.location.pathname
+        : `${window.location.pathname}?section=${pendingSection}`;
+      window.history.pushState({}, '', newUrl);
+
       lockSelections(pendingSection);
       setPendingSection(null);
     }
@@ -260,7 +315,7 @@ const PresalesHub = () => {
                 <button
                   key={item.id}
                   onClick={() => handleNavigate(item.id)}
-                  className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center' : ''} px-3 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${activeSection === item.id
+                  className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center' : ''} px-3 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${activeSection.split('/')[0] === item.id
                     ? 'bg-primary-50 text-primary-700 shadow-sm ring-1 ring-primary-200'
                     : item.active
                       ? 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
@@ -270,7 +325,7 @@ const PresalesHub = () => {
                   title={isSidebarCollapsed ? item.name : undefined}
                   aria-label={isSidebarCollapsed ? item.name : undefined}
                 >
-                  <Icon className={`w-5 h-5 ${!isSidebarCollapsed ? 'mr-3' : ''} transition-colors ${activeSection === item.id ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'
+                  <Icon className={`w-5 h-5 ${!isSidebarCollapsed ? 'mr-3' : ''} transition-colors ${activeSection.split('/')[0] === item.id ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'
                     }`} />
                   {!isSidebarCollapsed && <span>{item.name}</span>}
                   {!item.active && !isSidebarCollapsed && (
@@ -300,15 +355,15 @@ const PresalesHub = () => {
               </div>
             )}
           </div>
-        </div>
+        </div >
 
         {/* Main Content */}
-        <div className="flex-1 overflow-y-auto bg-gray-50/50">
+        < div className="flex-1 overflow-y-auto bg-gray-50/50" >
           <div className="max-w-7xl mx-auto p-8 animate-in fade-in duration-500 space-y-6">
             {renderContent()}
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
 
       {showGuardModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
@@ -385,7 +440,7 @@ const PresalesHub = () => {
           </div>
         </div>
       )}
-    </div>
+    </div >
   );
 };
 

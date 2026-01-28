@@ -79,8 +79,36 @@ const partnersData: PartnerData[] = [
     { id: 6, name: 'Partner 6', logo: '', description: '', useCases: [], caseStudies: [] },
 ];
 
-const Partners: React.FC = () => {
+interface PartnersProps {
+    route?: string;
+}
+
+const Partners: React.FC<PartnersProps> = ({ route }) => {
     const [selectedPartnerId, setSelectedPartnerId] = useState<number | null>(null);
+
+    React.useEffect(() => {
+        if (route && route.includes('/')) {
+            const partnerName = route.split('/')[1];
+            const partner = partnersData.find(p => p.name.toLowerCase() === partnerName.toLowerCase());
+            if (partner) {
+                setSelectedPartnerId(partner.id);
+            }
+        } else if (route === 'partners' || !route) {
+            setSelectedPartnerId(null);
+        }
+    }, [route]);
+
+    const handlePartnerClick = (partner: PartnerData) => {
+        setSelectedPartnerId(partner.id);
+        const newUrl = `${window.location.pathname}?section=partners/${partner.name.toLowerCase()}`;
+        window.history.pushState({}, '', newUrl);
+    };
+
+    const handleBack = () => {
+        setSelectedPartnerId(null);
+        const newUrl = `${window.location.pathname}?section=partners`;
+        window.history.pushState({}, '', newUrl);
+    };
 
     const activePartner = selectedPartnerId ? partnersData.find(p => p.id === selectedPartnerId) : null;
 
@@ -88,7 +116,7 @@ const Partners: React.FC = () => {
         return (
             <PartnerDetail
                 partner={activePartner}
-                onBack={() => setSelectedPartnerId(null)}
+                onBack={handleBack}
             />
         );
     }
@@ -106,20 +134,16 @@ const Partners: React.FC = () => {
                     return (
                         <div
                             key={partner.id}
+                            onClick={() => isInteractive && handlePartnerClick(partner)}
                             className={`
-                  relative bg-white rounded-xl shadow-md border border-gray-100 p-8 
-                  flex items-center justify-center h-48 transition-all duration-300 
-                  ${isInteractive
+                                relative bg-white rounded-xl shadow-md border border-gray-100 p-8 
+                                flex items-center justify-center h-48 transition-all duration-300 
+                                ${isInteractive
                                     ? 'group hover:shadow-xl hover:-translate-y-1 cursor-pointer'
                                     : 'opacity-80 cursor-default'
                                 }
-                  ${!partner.logo && 'opacity-60 border-dashed'}
-                `}
-                            onClick={() => {
-                                if (isInteractive) {
-                                    setSelectedPartnerId(partner.id);
-                                }
-                            }}
+                                ${!partner.logo && 'opacity-60 border-dashed'}
+                            `}
                         >
                             {partner.logo ? (
                                 <div className="flex flex-col items-center justify-between h-full w-full">
@@ -146,8 +170,8 @@ const Partners: React.FC = () => {
                         </div>
                     );
                 })}
-            </div>
-        </div>
+            </ div >
+        </div >
     );
 };
 
