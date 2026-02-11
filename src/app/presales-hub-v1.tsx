@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Home, FileText, Users, MessageSquare, BookOpen, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart, PanelLeft, PanelRight, ArrowUpRight, Bot, BadgeCheck, Handshake } from 'lucide-react';
+import { Home, Users, MessageSquare, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart, PanelLeft, PanelRight, ArrowUpRight, Handshake } from 'lucide-react';
 import headerLogo from './assets/img/image.png';
 import { BriefData, GeneratedBrief } from './modules/briefs/constants';
 import Dashboard from './modules/dashboard/Dashboard';
@@ -78,17 +78,13 @@ const PresalesHub = () => {
   const navigation = [
     { id: 'dashboard', name: 'Dashboard', icon: Home, active: true },
     { id: 'brief-generator', name: 'General Meeting Prep', icon: Sparkles, active: true },
-    { id: 'agentic-use-cases', name: 'Agentic Use Cases', icon: Bot, active: true },
-    { id: 'development-framework', name: 'Development Framework', icon: Layers, active: true, external: true, href: 'https://www.concentrix.com/services-solutions/agentic-ai/' },
-    { id: 'value-proposition', name: 'Value Proposition', icon: BadgeCheck, active: true },
-    { id: 'brief-history', name: 'Brief History', icon: History, active: true },
-    { id: 'case-studies', name: 'Case Studies', icon: FileText, active: true },
-    { id: 'key-questions', name: 'Key Questions', icon: MessageSquare, active: true },
-    { id: 'prospect-analyzer', name: 'Customer Intelligence', icon: LineChart, active: true, external: true, href: 'https://prospect-analyzer.onrender.com/dashboard' },
-    { id: 'talking-points', name: 'Talking Points', icon: BookOpen, active: true },
-    { id: 'partners', name: 'Partners', icon: Handshake, active: true },
     { id: 'team-skills', name: 'Team Capabilities', icon: Users, active: false },
-    { id: 'training', name: 'Training Plans', icon: GraduationCap, active: false },
+    { id: 'development-framework', name: 'Development Framework', icon: Layers, active: true, external: true, href: 'https://www.concentrix.com/services-solutions/agentic-ai/' },
+    { id: 'training', name: 'Learning Plans', icon: GraduationCap, active: false },
+    { id: 'partners', name: 'Partners', icon: Handshake, active: true },
+    { id: 'prospect-analyzer', name: 'Customer Intelligence', icon: LineChart, active: true, external: true, href: 'https://prospect-analyzer.onrender.com/dashboard' },
+    { id: 'key-questions', name: 'Key Discovery Questions', icon: MessageSquare, active: false },
+    { id: 'brief-history', name: 'Brief History', icon: History, active: true },
   ];
 
   const renderContent = () => {
