@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Home, Users, MessageSquare, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart, PanelLeft, PanelRight, ArrowUpRight, Handshake } from 'lucide-react';
+import { Home, Users, MessageSquare, GraduationCap, Layers, Sparkles, ChevronLeft, ChevronRight, History, LineChart, PanelLeft, PanelRight, ArrowUpRight, Handshake, Bot } from 'lucide-react';
 import headerLogo from './assets/img/image.png';
 import { BriefData, GeneratedBrief } from './modules/briefs/constants';
 import Dashboard from './modules/dashboard/Dashboard';
@@ -10,6 +10,7 @@ import KeyQuestions from './modules/knowledge-base/KeyQuestions';
 import TalkingPoints from './modules/knowledge-base/TalkingPoints';
 import Partners from './modules/partners/Partners';
 import ComingSoon from './modules/placeholders/ComingSoon';
+import PresalesCopilot from './modules/presales-copilot/PresalesCopilot.tsx';
 
 const offeringOptions = [
   'Select Offering...',
@@ -42,11 +43,7 @@ const getSectionFromUrl = () => {
   return params.get('section') || 'dashboard';
 };
 
-const requiresIndustry = (sectionId: string) =>
-  sectionId !== 'prospect-analyzer' &&
-  sectionId !== 'dashboard' &&
-  sectionId !== 'development-framework' &&
-  !sectionId.startsWith('partners');
+const requiresIndustry = (_sectionId: string) => false;
 
 const PresalesHub = () => {
   const [activeSection, setActiveSection] = useState(() => {
@@ -78,6 +75,7 @@ const PresalesHub = () => {
   const navigation = [
     { id: 'dashboard', name: 'Dashboard', icon: Home, active: true },
     { id: 'brief-generator', name: 'General Meeting Prep', icon: Sparkles, active: true },
+    { id: 'presales-copilot', name: 'Presales Copilot', icon: Bot, active: true },
     { id: 'team-skills', name: 'Team Capabilities', icon: Users, active: false },
     { id: 'development-framework', name: 'Development Framework', icon: Layers, active: true, external: true, href: 'https://www.concentrix.com/services-solutions/agentic-ai/' },
     { id: 'training', name: 'Learning Plans', icon: GraduationCap, active: false },
@@ -111,12 +109,13 @@ const PresalesHub = () => {
             setBriefData={setBriefData}
             generatedBrief={generatedBrief}
             setGeneratedBrief={setGeneratedBrief}
-            selectionLocked={isSelectionLocked}
             lockedIndustry={globalIndustry}
           />
         );
       case 'brief-history':
-        return <BriefHistory defaultIndustry={globalIndustry || undefined} selectionLocked={isSelectionLocked} lockedIndustry={globalIndustry} />;
+        return <BriefHistory defaultIndustry={globalIndustry || undefined} selectionLocked={isSelectionLocked} lockedIndustry={globalIndustry} onReset={handleResetSelections} />;
+      case 'presales-copilot':
+        return <PresalesCopilot />;
       case 'agentic-use-cases':
         return <ComingSoon title="Agentic Use Cases" description="Curated agentic AI patterns by industry and workflow" />;
       case 'value-proposition':
@@ -208,7 +207,6 @@ const PresalesHub = () => {
   };
 
   const handleGuardSubmit = () => {
-    if (!modalIndustry) return;
     setGlobalIndustry(modalIndustry);
     setGlobalOffering(modalOffering);
     setShowGuardModal(false);
@@ -367,8 +365,8 @@ const PresalesHub = () => {
           <div className="relative bg-white rounded-2xl shadow-2xl max-w-xl w-full border border-gray-200 p-6 space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs uppercase tracking-wide text-gray-500 font-semibold">Selection required</p>
-                <h3 className="text-xl font-bold text-gray-900">Choose Industry (required) & Offering (optional)</h3>
+                <p className="text-xs uppercase tracking-wide text-gray-500 font-semibold">Selection optional</p>
+                <h3 className="text-xl font-bold text-gray-900">Choose Industry & Offering (optional)</h3>
               </div>
               <button
                 type="button"
@@ -385,7 +383,7 @@ const PresalesHub = () => {
             <div className="space-y-3">
               <div className="flex flex-col gap-2">
                 <label className="text-xs font-semibold text-gray-600">
-                  Industry<span className="text-red-500">*</span>
+                  Industry (optional)
                 </label>
                 <select
                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400"
@@ -426,9 +424,8 @@ const PresalesHub = () => {
               </button>
               <button
                 type="button"
-                disabled={!modalIndustry}
                 onClick={handleGuardSubmit}
-                className={`px-4 py-2 text-sm font-semibold rounded-lg ${modalIndustry ? 'bg-primary-600 text-white hover:bg-primary-700' : 'bg-gray-200 text-gray-500 cursor-not-allowed'}`}
+                className="px-4 py-2 text-sm font-semibold rounded-lg bg-primary-600 text-white hover:bg-primary-700"
               >
                 Next
               </button>

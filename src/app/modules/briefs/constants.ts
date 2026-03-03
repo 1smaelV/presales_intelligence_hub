@@ -62,7 +62,7 @@ export interface GeneratedBrief {
         title: string;
         summary: string;
         metrics: string[];
-    };
+    } | null;
     industryInsights: string[];
     positioning: string[];
 }

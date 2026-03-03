@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Sparkles, Layers, Handshake, ArrowUpRight, GraduationCap, Users, RefreshCcw } from 'lucide-react';
+import { LineChart, Sparkles, Layers, Handshake, ArrowUpRight, GraduationCap, Users, RefreshCcw, Bot } from 'lucide-react';
 import { industries } from '../briefs/constants';
 
 const offerings = [
@@ -105,6 +105,25 @@ const Dashboard: React.FC<DashboardProps> = ({ onNavigate, industry, setIndustry
                         <p className="text-gray-500 mb-5 leading-relaxed">Get AI-personalized meeting prep in seconds, including a custom elevator pitch, smart discovery questions, and key industry insights.</p>
                         <span className="flex items-center text-primary-600 font-semibold group-hover:translate-x-2 transition-transform duration-200">
                             Get Started <span className="ml-2">-&gt;</span>
+                        </span>
+                    </div>
+                </div>
+
+                {/* Presales Copilot */}
+                <div
+                    className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer relative overflow-hidden"
+                    onClick={() => onNavigate('presales-copilot')}
+                >
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-500 opacity-50" />
+
+                    <div className="relative z-10">
+                        <div className="bg-indigo-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-indigo-600 transition-colors duration-300">
+                            <Bot className="w-8 h-8 text-indigo-600 group-hover:text-white transition-colors duration-300" />
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3">Presales Copilot</h3>
+                        <p className="text-gray-500 mb-5 leading-relaxed">Interactive AI assistant for strategy debugging, email drafting, and real-time competitive analysis.</p>
+                        <span className="flex items-center text-indigo-600 font-semibold group-hover:translate-x-2 transition-transform duration-200">
+                            Launch Copilot <span className="ml-2">-&gt;</span>
                         </span>
                     </div>
                 </div>

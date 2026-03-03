@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "vite",
+    "dev:frontend": "vite",
+    "dev:backend": "node server.js",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -13,13 +15,20 @@
   },
   "dependencies": {
     "clsx": "^2.1.0",
+    "cors": "^2.8.6",
     "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "lucide-react": "^0.344.0",
+    "mammoth": "^1.11.0",
     "mongodb": "^6.8.0",
+    "multer": "^2.0.2",
+    "officeparser": "^6.0.4",
+    "openai": "^6.25.0",
+    "pdf-parse": "^2.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^2.2.1"
+    "tailwind-merge": "^2.2.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
@@ -29,6 +38,7 @@
     "@types/react-dom": "^18.2.21",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.18",
+    "concurrently": "^9.2.1",
     "jsdom": "^27.3.0",
     "postcss": "^8.4.35",
     "serve": "^14.2.5",
