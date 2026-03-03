@@ -1,6 +1,15 @@
 import { Project, ProjectMaterial, ChatMessage } from './types';
 
-const BASE_URL = 'http://localhost:3001/api';
+const resolveApiBaseUrl = () => {
+    const envBase = import.meta.env.VITE_API_URL;
+    if (envBase) return envBase.replace(/\/$/, '');
+    if (typeof window === 'undefined') return '';
+    const origin = window.location.origin.replace(/\/$/, '');
+    if (origin.includes('localhost:5173')) return 'http://localhost:3001';
+    return origin;
+};
+
+const BASE_URL = `${resolveApiBaseUrl()}/api`;
 
 export async function fetchProjects(filters: { search?: string, industry?: string, stage?: string } = {}) {
     const params = new URLSearchParams(filters as any).toString();
