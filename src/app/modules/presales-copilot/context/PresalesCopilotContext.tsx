@@ -49,7 +49,7 @@ interface PresalesCopilotContextType {
 
 const PresalesCopilotContext = createContext<PresalesCopilotContextType | undefined>(undefined);
 
-const CACHE_TTL_PROJECTS = 5 * 60 * 1000; // 5 minutos
+// const CACHE_TTL_PROJECTS = 5 * 60 * 1000; // 5 minutos (unused, commented out for strict TS)
 const CACHE_TTL_MATERIALS = 30 * 1000; // 30 segundos
 const CACHE_TTL_CHAT = 60 * 1000; // 1 minuto
 const POLLING_INTERVAL = 3000; // 3 segundos
@@ -57,7 +57,7 @@ const POLLING_INTERVAL = 3000; // 3 segundos
 export const PresalesCopilotProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // State
     const [projects, setProjects] = useState<Project[]>([]);
-    const [projectsCache, setProjectsCache] = useState<CacheEntry<Project[]> | null>(null);
+    const [, setProjectsCache] = useState<CacheEntry<Project[]> | null>(null); // Destructuring only the setter to avoid TS6133
     const [materialsCache, setMaterialsCache] = useState<Map<string, CacheEntry<ProjectMaterial[]>>>(new Map());
     const [chatCache, setChatCache] = useState<Map<string, CacheEntry<ChatMessage[]>>>(new Map());
 
