@@ -59,6 +59,28 @@ async function getDb() {
   return dbPromise;
 }
 
+// Token Validation Endpoint
+app.post('/api/validate-token', (req, res) => {
+  const { token } = req.body;
+  if (!token) {
+    return res.status(400).json({ error: 'Token is required' });
+  }
+
+  // Remove potential surrounding quotes from the environment variables (e.g. if loaded via dotenv on Windows)
+  const cleanEnvVar = (val) => (val || '').replace(/^["']|["']$/g, '').trim();
+
+  const validDevToken = cleanEnvVar(process.env.DEV_TOKEN);
+  const validAdminToken = cleanEnvVar(process.env.ADMIN_TOKEN);
+
+  const isValid = token === validDevToken || token === validAdminToken;
+
+  if (isValid) {
+    return res.json({ success: true, valid: true });
+  } else {
+    return res.status(401).json({ error: 'Invalid or expired token', valid: false });
+  }
+});
+
 app.post('/api/briefs', async (req, res) => {
   const { briefData, generatedBrief } = req.body || {};
 
