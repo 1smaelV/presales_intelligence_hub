@@ -149,7 +149,11 @@ export async function sendProjectChatMessage(
 
     try {
         const query = history[history.length - 1].content;
-        const RAG_BASE_URL = 'http://localhost:3001/api'; // Direct fetch to avoid dependencies
+        const envBase = import.meta.env.VITE_API_URL;
+        const origin = typeof window !== 'undefined' ? window.location.origin.replace(/\/$/, '') : '';
+        const baseUrl = envBase ? envBase.replace(/\/$/, '') : (origin.includes('localhost:5173') ? 'http://localhost:3001' : origin);
+        const RAG_BASE_URL = `${baseUrl}/api`;
+
         const ragResponse = await fetch(`${RAG_BASE_URL}/projects/${projectId}/query`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
